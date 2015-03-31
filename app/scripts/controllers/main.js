@@ -10,30 +10,61 @@
 angular.module('animationEngineApp')
   .controller('MainCtrl', function () {
 
-    this.object = {
-        position: {
-            x: 100,
-            y: 100
-        },
-        effects: []
+    var self = this;
 
-    };
+    self.assets = [
+        {
+            name: 'background',
+            type: 'rect',
+            fill: '#666',
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height
+        }, {
+            name: 'smiley',
+            type: 'image',
+            src: 'img/smiley.jpg',
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            effects: [ 
+                {   
+                    type: 'translate',
+                    from: {
+                        x: 0,
+                        y: 0
+                    },
+                    to: {
+                        x: 800,
+                        y: 800
+                    },
+                    startTime: 1000,
+                    duration: 2000
+                }
+            ]
+        }
+    ];
 
-    this.data = JSON.stringify(this.object);
-
-    this.addMove = function (obj, destX, destY) {
+    self.addTranslate = function (asset, start, dur, destX, destY) {
         var params = {
-            type: 'move',
-            startTime: 1,
-            parameters: {
-                destX: destX,
-                destY: destY
-            }
+            type: 'translate',
+            from: {
+                x: 800,
+                y: 800
+            },
+            to: {
+                x: destX,
+                y: destY
+            },
+            startTime: start,
+            duration: dur,
         };
 
-        obj.effects.push(params);
+        asset.effects.push(params);
 
-        console.log(obj);
+        console.log(self.assets);
     };
 
   });

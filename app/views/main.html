@@ -24,10 +24,20 @@
  -->
 
  <div class="row">
-   <a class="btn btn-primary" ng-click="main.addMove(main.object, 100, 100)">Move</a>
+   <a class="btn btn-primary" ng-click="main.addTranslate(main.assets[1], 5000, 1000, 100, 100)">Move</a>
 
-   <p ng-model="main.data">
-   </p>
+     <pre> {{ main.assets }}</pre>
+
+    <div ng-repeat="asset in main.assets">
+      <div>
+        <h3>{{ asset.name }}</h3>
+        <p>{{ asset.type }}</p>
+        <div ng-repeat="effect in asset.effects">
+          <h4>Effects:</h4>
+          <p>{{ effect }}</p>
+        </div>
+      </div>
+    </div>
 
    <canvas id="canvas">
      
