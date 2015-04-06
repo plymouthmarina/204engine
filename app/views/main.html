@@ -24,22 +24,80 @@
  -->
 
  <div class="row">
-   <a class="btn btn-primary" ng-click="main.addTranslate(main.assets[1], 5000, 1000, 100, 100)">Move</a>
-
-     <pre> {{ main.assets }}</pre>
-
-    <div ng-repeat="asset in main.assets">
-      <div>
-        <h3>{{ asset.name }}</h3>
-        <p>{{ asset.type }}</p>
-        <div ng-repeat="effect in asset.effects">
-          <h4>Effects:</h4>
-          <p>{{ effect }}</p>
+   <div class="col-lg-4">
+     <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">Asset properties</h1>
         </div>
-      </div>
-    </div>
 
-   <canvas id="canvas">
+        <ul class="list-group" ng-repeat="asset in main.assets">
+          <li class="list-group-item">
+            <h6>{{ asset.name }}</h6>
+            <p>{{ asset.type }}</p>
+            <div class="panel panel-default" ng-repeat="effect in asset.effects">
+
+              <div class="panel-heading">
+                <h1 class="panel-title">
+                  {{ effect.type }}
+                </h1>
+              </div>
+
+              <!-- TRANSLATE -->
+              <ul class="list-group" ng-if="effect.type == 'translate'">
+                <li class="list-group-item">
+                  <label>From:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">x</span>
+                    <input type="number" ng-model="effect.from.x">          
+                    <span class="input-group-addon" id="basic-addon1">y</span>
+                    <input type="number" ng-model="effect.from.y">          
+                  </div>
+                </li>
+
+                <li class="list-group-item">  
+                  <label>To:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">x</span>
+                    <input type="number" ng-model="effect.to.x">          
+                    <span class="input-group-addon" id="basic-addon1">y</span>
+                    <input type="number" ng-model="effect.to.y">          
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <label>Start:</label>
+                  <input type="number" ng-model="effect.startTime">
+                </li>
+
+                <li class="list-group-item">
+                  <label>Duration:</label>
+                  <input type="number" ng-model="effect.duration">
+                </li>
+              </ul>
+
+
+                <p>{{ effect }}</p>
+            </div>
+
+          </li>
+        </ul>
+
+     </div>
+   </div>
+
+
+   <div class="col-lg-6 panel">
+     <canvas id="canvas"></canvas>
+     <code><pre> {{ main.assets }}</pre></code>
      
-   </canvas>
+   </div>
+
+
+     
+
+   <div class="col-lg-2 panel panel-fx">
+     <h1>Right column</h1>
+     
+     <a class="btn btn-primary" ng-click="main.addTranslate(main.assets[1], 5000, 1000, 100, 100)">Move</a>
+   </div>
  </div>
