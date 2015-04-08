@@ -3,36 +3,72 @@
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 
-var assets = [{
-    name: 'background',
-    type: 'rect',
-    fill: '#666',
-    pos: {
-        x: 0,
-        y: 0
-    },
-    width: canvas.width,
-    height: canvas.height
-},{
-    name: 'smiley',
-    type: 'image',
-    src: 'img/smiley.jpg',
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
-    effects: [ {
-        type: 'move',
-        startTime: 1000,
-        duration: 2000,
-        params: {
-            origX: null,
-            origY: null,
-            destX: 800,
-            destY: 800
+// var assets = [{
+//     name: 'background',
+//     type: 'rect',
+//     fill: '#666',
+//     pos: {
+//         x: 0,
+//         y: 0
+//     },
+//     width: canvas.width,
+//     height: canvas.height
+// },{
+//     name: 'smiley',
+//     type: 'image',
+//     src: 'img/smiley.jpg',
+//     x: 0,
+//     y: 0,
+//     width: 100,
+//     height: 100,
+//     effects: [ {
+//         type: 'move',
+//         startTime: 1000,
+//         duration: 2000,
+//         params: {
+//             origX: null,
+//             origY: null,
+//             destX: 800,
+//             destY: 800
+//         }
+//     } ]
+// }]; 
+
+var assets = [
+        {
+            name: 'background',
+            type: 'rect',
+            fill: '#666',
+            x: 0,
+            y: 0,
+            width: 1000,
+            height: 1000,
+            effects: []
+        }, {
+            name: 'smiley',
+            type: 'image',
+            src: 'img/smiley.jpg',
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            effects: [ 
+                {   
+                    type: 'translate',
+                    from: {
+                        x: 0,
+                        y: 0
+                    },
+                    to: {
+                        x: 800,
+                        y: 800
+                    },
+                    startTime: 1000,
+                    duration: 2000
+                }
+            ]
         }
-    } ]
-}]; 
+    ];
 
 
 // global vars
@@ -100,14 +136,14 @@ function drawFrame(timestamp) {
 var fx = {
     translate: function (asset, effect, timestamp) {
         // save start values x & y to calculate increments
-        if (typeof effect.params.origX !== 'number') {
+        if (typeof effect.from.x !== 'number') {
             console.log('set effect starting point');
-            effect.params.origX = asset.x;
-            effect.params.origY = asset.y;
+            effect.from.x = asset.x;
+            effect.from.y = asset.y;
         }
 
-        var incX = (effect.params.destX - effect.params.origX) / effect.duration;
-        var incY = (effect.params.destY - effect.params.origY) / effect.duration;
+        var incX = (effect.to.x - effect.from.x) / effect.duration;
+        var incY = (effect.to.y - effect.from.y) / effect.duration;
 
         asset.x = incX * (timestamp - effect.startTime);
         console.log(incX * (timestamp - effect.startTime));
