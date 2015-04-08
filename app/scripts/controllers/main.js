@@ -12,6 +12,8 @@ angular.module('animationEngineApp')
 
     var self = this;
 
+    self.index = null;
+
     self.assets = [
         {
             name: 'background',
@@ -20,7 +22,8 @@ angular.module('animationEngineApp')
             x: 0,
             y: 0,
             width: canvas.width,
-            height: canvas.height
+            height: canvas.height,
+            effects: []
         }, {
             name: 'smiley',
             type: 'image',
@@ -47,7 +50,14 @@ angular.module('animationEngineApp')
         }
     ];
 
-    self.addTranslate = function (asset, start, dur, destX, destY) {
+    self.addTranslate = function (index, start, dur, destX, destY) {
+        if (!index) {
+            console.log("Current asset: " + index);
+            return console.error("No asset index selected");
+        }
+
+        var asset = self.assets[index];
+
         var params = {
             type: 'translate',
             from: {

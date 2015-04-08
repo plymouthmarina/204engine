@@ -28,67 +28,115 @@
      <div class="panel panel-default">
         <div class="panel-heading">
           <h1 class="panel-title">Asset properties</h1>
-        </div>
+        </div> <!-- panel-heading -->
 
-        <ul class="list-group" ng-repeat="asset in main.assets">
-          <li class="list-group-item">
-            <h6>{{ asset.name }}</h6>
-            <p>{{ asset.type }}</p>
-            <div class="panel panel-default" ng-repeat="effect in asset.effects">
+        <!-- List Assets -->
+        <div class="panel-group">
+          <div class="panel panel-default" ng-repeat="asset in main.assets">
 
-              <div class="panel-heading">
-                <h1 class="panel-title">
-                  {{ effect.type }}
-                </h1>
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                {{ asset.name }}
+              </h4>
+            </div> <!-- panel-heading -->
+
+            <div class="panel-body">
+              <p><strong>Type: </strong>{{ asset.type }}</p>
+
+              <img ng-src="{{ asset.src }}" ng-if="asset.type === 'image'">
+
+              <div class="form-group" ng-if="asset.type === 'rect'">
+                <label>fill (hex):</label>
+                <input type="text" ng-model="asset.fill">
+              </div>
+              
+              <div class="form-group">
+                <input type="text" ng-model="asset.src">
               </div>
 
-              <!-- TRANSLATE -->
-              <ul class="list-group" ng-if="effect.type == 'translate'">
-                <li class="list-group-item">
-                  <label>From:</label>
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">x</span>
-                    <input type="number" ng-model="effect.from.x">          
-                    <span class="input-group-addon" id="basic-addon1">y</span>
-                    <input type="number" ng-model="effect.from.y">          
+              <div class="form-group">
+                  <label>Width</label>
+                  <input type="number" ng-model="asset.width">  
+              </div>
+              <div class="form-group">
+                <label>Height</label>
+                <input type="number" ng-model="asset.height">
+              </div>
+
+              <div class="form-group">
+                  <label>X:</label>
+                  <input type="number" ng-model="asset.x">  
+              </div>
+              <div class="form-group">
+                <label>Y:</label>
+                <input type="number" ng-model="asset.y">
+              </div>
+
+
+              <div class="panel-group">
+                <div class="panel panel-default" ng-repeat="effect in asset.effects">
+                  
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" href="#{{ effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</a>
+                    </h4>
                   </div>
-                </li>
 
-                <li class="list-group-item">  
-                  <label>To:</label>
-                  <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">x</span>
-                    <input type="number" ng-model="effect.to.x">          
-                    <span class="input-group-addon" id="basic-addon1">y</span>
-                    <input type="number" ng-model="effect.to.y">          
+                  <div class="panel-body collapse" id="{{ effect.type + $index }}">
+
+                    <!-- TRANSLATE -->
+                    <ul class="list-group" ng-if="effect.type == 'translate'">
+                      <li class="list-group-item">
+                        <label>From:</label>
+                        <div class="input-group">
+                          <span class="input-group-addon" id="basic-addon1">x</span>
+                          <input type="number" ng-model="effect.from.x">          
+                          <span class="input-group-addon" id="basic-addon1">y</span>
+                          <input type="number" ng-model="effect.from.y">          
+                        </div>
+                      </li>
+
+                      <li class="list-group-item">  
+                        <label>To:</label>
+                        <div class="input-group">
+                          <span class="input-group-addon" id="basic-addon1">x</span>
+                          <input type="number" ng-model="effect.to.x">          
+                          <span class="input-group-addon" id="basic-addon1">y</span>
+                          <input type="number" ng-model="effect.to.y">          
+                        </div>
+                      </li>
+
+                      <li class="list-group-item">
+                        <label>Start:</label>
+                        <input type="number" ng-model="effect.startTime">
+                      </li>
+
+                      <li class="list-group-item">
+                        <label>Duration:</label>
+                        <input type="number" ng-model="effect.duration">
+                      </li>
+                    </ul>
                   </div>
-                </li>
-
-                <li class="list-group-item">
-                  <label>Start:</label>
-                  <input type="number" ng-model="effect.startTime">
-                </li>
-
-                <li class="list-group-item">
-                  <label>Duration:</label>
-                  <input type="number" ng-model="effect.duration">
-                </li>
-              </ul>
+                </div>
+                {{ asset }}
 
 
+            </div> <!-- .panel-body -->
+          </div>  <!-- .panel -->
+        </div> <!-- .panel-group -->
                 <p>{{ effect }}</p>
-            </div>
-
-          </li>
-        </ul>
-
-     </div>
-   </div>
+      </div>
+    </div>
+  </div>
 
 
    <div class="col-lg-6 panel">
      <canvas id="canvas"></canvas>
      <code><pre> {{ main.assets }}</pre></code>
+        <div><p>
+          index selected asset:
+          {{ main.index}}
+        </p></div>
      
    </div>
 
@@ -97,7 +145,12 @@
 
    <div class="col-lg-2 panel panel-fx">
      <h1>Right column</h1>
+
+     <div class="form-group">
+       <label>Select Asset to affect:</label>
+        <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.index"></select>
+     </div>
      
-     <a class="btn btn-primary" ng-click="main.addTranslate(main.assets[1], 5000, 1000, 100, 100)">Move</a>
+     <a class="btn btn-primary" ng-click="main.addTranslate(main.index, 5000, 1000, 100, 100)">Move</a>
    </div>
  </div>
