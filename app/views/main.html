@@ -78,8 +78,9 @@
                   
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" href="#{{ effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</a>
+                      <p data-toggle="collapse" ng-href="#{{ effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
                     </h4>
+                    <a class="delete" ng-click="main.deleteEffect($parent.$index, $index)">Delete</a>
                   </div>
 
                   <div class="panel-body collapse" id="{{ effect.type + $index }}">
@@ -118,13 +119,13 @@
                     </ul>
                   </div>
                 </div>
-                {{ asset }}
+                <!-- {{ asset }} -->
 
 
             </div> <!-- .panel-body -->
           </div>  <!-- .panel -->
         </div> <!-- .panel-group -->
-                <p>{{ effect }}</p>
+                <!-- <p>{{ effect }}</p> -->
       </div>
     </div>
   </div>

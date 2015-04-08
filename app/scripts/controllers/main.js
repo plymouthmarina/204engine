@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name animationEngineApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the animationEngineApp
- */
 angular.module('animationEngineApp')
   .controller('MainCtrl', function () {
 
@@ -77,6 +70,10 @@ angular.module('animationEngineApp')
         asset.effects.push(params);
 
         console.log(self.assets);
+    };
+
+    self.deleteEffect = function (assetIndex, fxIndex) {
+        self.assets[assetIndex].effects.splice(fxIndex, 1);
     };
 
     self.addAsset = function () {
