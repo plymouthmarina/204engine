@@ -1,6 +1,6 @@
 'use strict';
 
-var assets = null;
+var assets;
 var canvas = null;
 var context = null;
 
@@ -12,8 +12,8 @@ var start = null;
 // need key-values so we can link images to asset props ^
 var images = {};
 
-function init(assets, width, height) {
-    var assets = assets;
+function init(_assets, width, height) {
+    var assets = _assets;
 
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
@@ -21,7 +21,10 @@ function init(assets, width, height) {
     width = width;
     height = height;
     // load images
-    assets.forEach(function (assets, index) {
+    console.log("_assets", _assets);
+    console.log("assets", assets);
+    assets.forEach(function (asset, index) {
+        console.log("asset " + index);
         if (asset.type == 'image') {
             // to implement:
             // insert img tag in dom with angular when added, then load image from that source
@@ -33,13 +36,14 @@ function init(assets, width, height) {
     requestAnimationFrame(drawFrame);
 }
 
-function drawFrame(timestamp, assets) {
+function drawFrame(timestamp) {
     // set start time when animation starts
     if (!start) start = timestamp;
     // calculate time elapsed
     var deltaTime = timestamp - start;
 
     // UPDATE
+    console.log("current assets passed :", assets);
     assets.forEach(function (asset, index) {
         if (asset.effects) asset.effects.forEach(function (effect, index) {
             // check if effects function needs to be called
