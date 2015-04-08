@@ -80,6 +80,10 @@ angular.module('animationEngineApp')
         self.assets.push(self.assetSelected);
     };
 
+    self.deleteAsset = function (assetIndex) {
+        self.assets.splice(assetIndex, 1);
+    };
+
     self.templates = {
         rect: {
             name: 'rectangle',
