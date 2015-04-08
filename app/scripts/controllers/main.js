@@ -12,7 +12,9 @@ angular.module('animationEngineApp')
 
     var self = this;
 
-    self.index = null;
+    self.fxIndex = null;
+    self.assetSelected = null;
+
 
     self.assets = [
         {
@@ -77,8 +79,33 @@ angular.module('animationEngineApp')
         console.log(self.assets);
     };
 
-  });
+    self.addAsset = function () {
+        self.assets.push(self.assetSelected);
+    };
 
+    self.templates = {
+        rect: {
+            name: 'rectangle',
+            type: 'rect',
+            fill: '#777',
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            effects: []
+        },
+        image: {
+            name: 'image',
+            type: 'image',
+            src: null,
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            effects: []
+        }
+    };
+});
 
 /* effects object:
 {

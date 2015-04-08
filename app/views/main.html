@@ -135,7 +135,7 @@
      <code><pre> {{ main.assets }}</pre></code>
         <div><p>
           index selected asset:
-          {{ main.index}}
+          {{ main.assetSelected}}
         </p></div>
      
    </div>
@@ -148,9 +148,16 @@
 
      <div class="form-group">
        <label>Select Asset to affect:</label>
-        <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.index"></select>
+        <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.fxIndex"></select>
+       <a class="btn btn-primary" ng-click="main.addTranslate(main.fxIndex, 5000, 1000, 100, 100)">Add Effect</a>
      </div>
      
-     <a class="btn btn-primary" ng-click="main.addTranslate(main.index, 5000, 1000, 100, 100)">Move</a>
+
+     <div class="form-group">
+       <label>Add new asset:</label>
+       <select ng-options="key for (key, value) in main.templates" ng-model="main.assetSelected">{{ key }}</select>
+       <a class="btn btn-primary" ng-click="main.addAsset()">Add Asset</a>
+     </div>
+     
    </div>
  </div>
