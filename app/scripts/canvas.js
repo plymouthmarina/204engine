@@ -1,39 +1,10 @@
 'use strict';
 
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
+var assets = null;
+var canvas = null;
+var context = null;
 
-var assets = [{
-    name: 'background',
-    type: 'rect',
-    fill: '#666',
-    pos: {
-        x: 0,
-        y: 0
-    },
-    width: canvas.width,
-    height: canvas.height
-},{
-    name: 'smiley',
-    type: 'image',
-    src: 'img/smiley.jpg',
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
-    effects: [ {
-        type: 'move',
-        startTime: 1000,
-        duration: 2000,
-        params: {
-            origX: null,
-            origY: null,
-            destX: 800,
-            destY: 800
-        }
-    } ]
-}]; 
-
+var width, height = null;
 
 // global vars
 var start = null;
@@ -41,9 +12,16 @@ var start = null;
 // need key-values so we can link images to asset props ^
 var images = {};
 
-function init(assets) {
+function init(assets, width, height) {
+    var assets = assets;
+
+    canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+
+    width = width;
+    height = height;
     // load images
-    assets.forEach(function (asset, index) {
+    assets.forEach(function (assets, index) {
         if (asset.type == 'image') {
             // to implement:
             // insert img tag in dom with angular when added, then load image from that source
@@ -55,7 +33,7 @@ function init(assets) {
     requestAnimationFrame(drawFrame);
 }
 
-function drawFrame(timestamp) {
+function drawFrame(timestamp, assets) {
     // set start time when animation starts
     if (!start) start = timestamp;
     // calculate time elapsed
@@ -75,7 +53,7 @@ function drawFrame(timestamp) {
     // DRAW
 
     // clear canvas
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, width, height);
 
     assets.forEach(function (asset, index) {
         console.log('please draw me');
@@ -118,4 +96,4 @@ var fx = {
     }
 };
 
-requestAnimationFrame(init(assets));
+// requestAnimationFrame(init(assets));

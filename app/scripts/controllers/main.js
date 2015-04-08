@@ -4,10 +4,18 @@ angular.module('animationEngineApp')
   .controller('MainCtrl', function () {
 
     var self = this;
+    var c = {
+        width: 1000,
+        height: 1000
+    }
 
     self.fxIndex = null;
     self.assetSelected = null;
 
+    self.play = function () {
+        console.log(self.assets);
+        init(self.assets, c.width, c.height);
+    };
 
     self.assets = [
         {
@@ -16,8 +24,8 @@ angular.module('animationEngineApp')
             fill: '#666',
             x: 0,
             y: 0,
-            width: canvas.width,
-            height: canvas.height,
+            width: c.width,
+            height: c.height,
             effects: []
         }, {
             name: 'smiley',
@@ -91,8 +99,8 @@ angular.module('animationEngineApp')
             fill: '#777',
             x: 0,
             y: 0,
-            width: canvas.width,
-            height: canvas.height,
+            width: c.width,
+            height: c.height,
             effects: []
         },
         image: {

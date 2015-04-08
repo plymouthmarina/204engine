@@ -133,7 +133,8 @@
 
 
    <div class="col-lg-6 panel">
-     <canvas id="canvas"></canvas>
+     <canvas id="canvas" width="1000" height="1000"></canvas>
+     
      <code><pre> {{ main.assets }}</pre></code>
         <div><p>
           index selected asset:
@@ -160,6 +161,8 @@
        <select ng-options="key for (key, value) in main.templates" ng-model="main.assetSelected">{{ key }}</select>
        <a class="btn btn-primary" ng-click="main.addAsset()">Add Asset</a>
      </div>
+
+     <a class="btn btn-warning" ng-click="main.play()">PLAAAYYYY</a>
      
    </div>
  </div>
