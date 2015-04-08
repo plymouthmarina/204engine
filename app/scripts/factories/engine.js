@@ -1,5 +1,5 @@
 var engine = angular.module('engine', []).factory('engine', function () {
-    var engine;
+    var engine = {};
 
     'use strict';
 
