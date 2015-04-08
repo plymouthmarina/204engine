@@ -41,7 +41,7 @@ var start = null;
 // need key-values so we can link images to asset props ^
 var images = {};
 
-function init() {
+function init(assets) {
     // load images
     assets.forEach(function (asset, index) {
         if (asset.type == 'image') {
@@ -73,6 +73,10 @@ function drawFrame(timestamp) {
     });
 
     // DRAW
+
+    // clear canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
     assets.forEach(function (asset, index) {
         console.log('please draw me');
 
@@ -114,4 +118,4 @@ var fx = {
     }
 };
 
-requestAnimationFrame(init);
+requestAnimationFrame(init(assets));
