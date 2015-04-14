@@ -17,7 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'engineDir',
-    'assets'
+    'engine'
   ])
   .config(function ($routeProvider) {
     $routeProvider

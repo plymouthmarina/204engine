@@ -1,4 +1,4 @@
-angular.module("engineDir", []).directive('enginedir', ['assetsSvc', function (assetsSvc) {
+angular.module("engineDir", []).directive('enginedir', ['assetsSvc', 'fx', function (assetsSvc, fx) {
   "use strict";
   return {
     restrict: 'E',
