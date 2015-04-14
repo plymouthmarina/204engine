@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('animationEngineApp')
-  .controller('MainCtrl', function () {
+  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', function (assetsSvc, canvasSvc) {
 
     var self = this;
     var c = {
@@ -13,45 +13,12 @@ angular.module('animationEngineApp')
     self.assetSelected = null;
 
     self.play = function () {
-        console.log(self.assets);
-        init(self.assets, c.width, c.height);
+        console.log(canvas);
+        console.log(canvas.init);
+        canvasSvc.init(1000, 1000);
     };
 
-    self.assets = [
-        {
-            name: 'background',
-            type: 'rect',
-            fill: '#666',
-            x: 0,
-            y: 0,
-            width: c.width,
-            height: c.height,
-            effects: []
-        }, {
-            name: 'smiley',
-            type: 'image',
-            src: 'img/smiley.jpg',
-            x: 0,
-            y: 0,
-            width: 100,
-            height: 100,
-            effects: [ 
-                {   
-                    type: 'translate',
-                    from: {
-                        x: 0,
-                        y: 0
-                    },
-                    to: {
-                        x: 800,
-                        y: 800
-                    },
-                    startTime: 1000,
-                    duration: 2000
-                }
-            ]
-        }
-    ];
+    self.assets = assetsSvc.assets;
 
     self.addTranslate = function (index, start, dur, destX, destY) {
         if (!index) {
@@ -114,7 +81,7 @@ angular.module('animationEngineApp')
             effects: []
         }
     };
-});
+}]);
 
 /* effects object:
 {

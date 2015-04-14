@@ -44,7 +44,7 @@
             <div class="panel-body">
               <p><strong>Type: </strong>{{ asset.type }}</p>
 
-              <img ng-src="{{ asset.src }}" ng-if="asset.type === 'image'">
+              <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image'">
 
               <div class="form-group" ng-if="asset.type === 'rect'">
                 <label>fill (hex):</label>
