@@ -1,5 +1,6 @@
-angular.module("engine", []).service("assetsSvc", function () {
-  var self = this
+ angular.module('engine', []).service('assetsSvc', function () {
+  'use strict';
+  var self = this;
 
   self.assets = [
         {
@@ -38,34 +39,36 @@ angular.module("engine", []).service("assetsSvc", function () {
     ];
 
   self.getAssets = function () {
-    return JSON.stringify(self.assets);
-  }
+    return angular.copy(self.assets);
+  };
+
 })
 
 
-.service("fx", function () {
-  var self = this;
+.service('fx', function () {
+  'use strict';
 
-    this.translate = function (asset, effect, timestamp) {
-        // save start values x & y to calculate increments
-        if (typeof effect.from.x !== 'number') {
-            console.log('set effect starting point');
-            effect.from.x = asset.x;
-            effect.from.y = asset.y;
-        }
+  this.translate = function (asset, effect, timestamp) {
+      // save start values x & y to calculate increments
+      if (typeof effect.from.x !== 'number') {
+          console.log('set effect starting point');
+          effect.from.x = asset.x;
+          effect.from.y = asset.y;
+      }
 
-        var incX = (effect.to.x - effect.from.x) / effect.duration;
-        var incY = (effect.to.y - effect.from.y) / effect.duration;
+      var incX = (effect.to.x - effect.from.x) / effect.duration;
+      var incY = (effect.to.y - effect.from.y) / effect.duration;
 
-        asset.x = incX * (timestamp - effect.startTime);
-        asset.y = incY * (timestamp - effect.startTime);
+      asset.x = incX * (timestamp - effect.startTime);
+      asset.y = incY * (timestamp - effect.startTime);
 
-        // note to self: we're passing by reference here dummy, so just change obj properties :)
-        // return { x: incX * (timestamp - startTime), y: incY * (timestamp - startTime) };
-    }
+      // note to self: we're passing by reference here dummy, so just change obj properties :)
+      // return { x: incX * (timestamp - startTime), y: incY * (timestamp - startTime) };
+  };
 })
 
-.service("canvasSvc", ['assetsSvc', 'fx', function (assetsSvc, fx) {
+.service('canvasSvc', ['assetsSvc', 'fx', function (assetsSvc, fx) {
+  'use strict';
   var self = this;
 
   // we're changing position, so need to get a copy, not reference!
@@ -82,9 +85,9 @@ angular.module("engine", []).service("assetsSvc", function () {
   var images = {};
 
   self.init = function (width, height) {
-      start = null;
-      console.log("INITIATIONNNNN");
-      assets = JSON.parse(assetsSvc.getAssets());
+      self.start = null;
+      assets = angular.copy(assetsSvc.assets);
+      console.log("asset as to be drawn", assets);
 
       canvas = document.getElementById('canvas');
       context = canvas.getContext('2d');
@@ -93,10 +96,10 @@ angular.module("engine", []).service("assetsSvc", function () {
       height = height;
       // load images
       // console.log("_assets", _assets);
-      console.log("assets", assets);
+      console.log('assets', assets);
       assets.forEach(function (asset, index) {
-          console.log("asset " + index);
-          if (asset.type == 'image') {
+          console.log('asset ' + index);
+          if (asset.type === 'image') {
               // to implement:
               // insert img tag in dom with angular when added, then load image from that source
               images[asset.name] = new Image();
@@ -105,28 +108,31 @@ angular.module("engine", []).service("assetsSvc", function () {
       });
 
       requestAnimationFrame(self.drawFrame);
-  }
+  };
 
   self.drawFrame = function (timestamp) {
 
       // set start time when animation starts
-      if (!start) start = timestamp;
+      if (!self.start) { self.start = timestamp; }
       // console.log("start", start);
 
       // calculate time elapsed
-      var deltaTime = timestamp - start;
+      var deltaTime = timestamp - self.start;
       // console.log("dTime", deltaTime);
 
       // var assets = assetsSvc.getAssets();
       // UPDATE
       // console.log("current assets passed :", assets);
       assets.forEach(function (asset, index) {
-          if (asset.effects) asset.effects.forEach(function (effect, index) {
-              // check if effects function needs to be called
-              if (effect.startTime <= deltaTime && (effect.startTime + effect.duration) > deltaTime) {
-                  fx.translate(asset, effect, deltaTime);
-              }
-          });
+          if (asset.effects) {
+            asset.effects.forEach(function (effect, index) {
+                // check if effects function needs to be called
+                if (effect.startTime <= deltaTime && (effect.startTime + effect.duration) > deltaTime) {
+                    console.log('effect', index);
+                    fx.translate(asset, effect, deltaTime);
+                }
+            });
+          }
       });
 
       // DRAW
@@ -137,16 +143,16 @@ angular.module("engine", []).service("assetsSvc", function () {
           // console.log("length", assets);
           // console.log('please draw me', index);
 
-          if (asset.type == 'rect') {
+          if (asset.type === 'rect') {
               context.rect(asset.x, asset.y, asset.width, asset.height);
               context.fillStyle=asset.fill;
               context.fill();
           }
-          else if (asset.type == 'image') {
+          else if (asset.type === 'image') {
               context.drawImage(images[asset.name], asset.x, asset.y, asset.width, asset.height);
           }
       });
 
       requestAnimationFrame(self.drawFrame);
-  }
-}])
+  };
+}]);

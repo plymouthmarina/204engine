@@ -4,26 +4,25 @@ angular.module('animationEngineApp')
   .controller('MainCtrl', ['assetsSvc', 'canvasSvc', function (assetsSvc, canvasSvc) {
 
     var self = this;
-    var c = {
-        width: 1000,
-        height: 1000
-    }
+    // var c = {
+    //     width: 1000,
+    //     height: 1000
+    // };
 
     self.fxIndex = null;
     self.assetSelected = null;
 
     self.play = function () {
-        console.log(canvas);
-        console.log(canvas.init);
         canvasSvc.init(1000, 1000);
     };
 
+    // this should be a shallow copy to keep the service in sync with the view
     self.assets = assetsSvc.assets;
 
     self.addTranslate = function (index, start, dur, destX, destY) {
         if (!index) {
-            console.log("Current asset: " + index);
-            return console.error("No asset index selected");
+            console.log('Current asset: ' + index);
+            return console.error('No asset index selected');
         }
 
         var asset = self.assets[index];
@@ -66,8 +65,8 @@ angular.module('animationEngineApp')
             fill: '#777',
             x: 0,
             y: 0,
-            width: c.width,
-            height: c.height,
+            width: canvas.width,
+            height: canvas.height,
             effects: []
         },
         image: {
