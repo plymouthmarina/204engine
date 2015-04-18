@@ -16,16 +16,16 @@
             name: 'smiley',
             type: 'image',
             src: 'images/smiley.jpg',
-            x: 0,
-            y: 0,
+            x: 200,
+            y: 200,
             width: 100,
             height: 100,
             effects: [ 
                 {   
                     type: 'translate',
                     from: {
-                        x: 0,
-                        y: 0
+                        x: null,
+                        y: null
                     },
                     to: {
                         x: 800,
@@ -44,30 +44,54 @@
 
 })
 
+.service('time', function () {
+  'use strict';
 
-.service('fx', function () {
+  var self = this;
+
+  self.startTime = null;
+  self.deltaTime = null;
+  self.currentTime = null;
+
+  self.reset = function () {
+    self.startTime = null;
+    self.deltaTime = null;
+    self.currentTime = null;
+  };
+
+})
+
+
+.service('fx', ['time', function (time) {
   'use strict';
 
   this.translate = function (asset, effect, timestamp) {
       // save start values x & y to calculate increments
-      if (typeof effect.from.x !== 'number') {
+      if (typeof effect.from.x !== 'number' || effect.from.x === null) {
           console.log('set effect starting point');
           effect.from.x = asset.x;
           effect.from.y = asset.y;
       }
 
+      // calculate delta per milisecond
       var incX = (effect.to.x - effect.from.x) / effect.duration;
       var incY = (effect.to.y - effect.from.y) / effect.duration;
+      // console.log('delta x per milisecond: ', incX);
 
-      asset.x = incX * (timestamp - effect.startTime);
-      asset.y = incY * (timestamp - effect.startTime);
+      // should do: new pos = current pos + (timeElapsedSinceLastDraw *incX)
+      // does: new pos = current pos + (timeElapsedSinceStart *incX)
+      asset.x = asset.x + (incX * time.deltaTime);
+      asset.y = asset.y + (incY * time.deltaTime);
+      // console.log("time elapsed", incX * (timestamp - effect.startTime));
+
+      // console.log('current x: ' + asset.x + ' dest x: ' + effect.to.x);
 
       // note to self: we're passing by reference here dummy, so just change obj properties :)
       // return { x: incX * (timestamp - startTime), y: incY * (timestamp - startTime) };
   };
-})
+}])
 
-.service('canvasSvc', ['assetsSvc', 'fx', function (assetsSvc, fx) {
+.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx, time) {
   'use strict';
   var self = this;
 
@@ -79,13 +103,13 @@
   var width, height = 1000;
 
   // global vars
-  self.start = null;
-
   // need key-values so we can link images to asset props ^
   var images = {};
 
   self.init = function (width, height) {
-      self.start = null;
+      time.reset();
+
+      // DEEP COPY!
       assets = angular.copy(assetsSvc.assets);
       console.log("asset as to be drawn", assets);
 
@@ -94,9 +118,7 @@
 
       width = width;
       height = height;
-      // load images
-      // console.log("_assets", _assets);
-      console.log('assets', assets);
+      // preload images
       assets.forEach(function (asset, index) {
           console.log('asset ' + index);
           if (asset.type === 'image') {
@@ -113,12 +135,20 @@
   self.drawFrame = function (timestamp) {
 
       // set start time when animation starts
-      if (!self.start) { self.start = timestamp; }
+      if (!time.start) { 
+        time.start = timestamp;
+        time.currentTime = timestamp;
+        time.deltaTime = 0;
+      } else {
+        time.deltaTime = timestamp - time.currentTime;
+        time.currentTime = timestamp;
+      }
+      // console.log('delta time', time.deltaTime);
       // console.log("start", start);
 
       // calculate time elapsed
-      var deltaTime = timestamp - self.start;
-      // console.log("dTime", deltaTime);
+      var timeElapsed = timestamp - time.start;
+      // console.log("dTime", timeElapsed);
 
       // var assets = assetsSvc.getAssets();
       // UPDATE
@@ -127,9 +157,8 @@
           if (asset.effects) {
             asset.effects.forEach(function (effect, index) {
                 // check if effects function needs to be called
-                if (effect.startTime <= deltaTime && (effect.startTime + effect.duration) > deltaTime) {
-                    console.log('effect', index);
-                    fx.translate(asset, effect, deltaTime);
+                if (effect.startTime <= timeElapsed && (effect.startTime + effect.duration) > timeElapsed) {
+                    fx.translate(asset, effect, timeElapsed);
                 }
             });
           }
