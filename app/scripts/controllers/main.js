@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('animationEngineApp')
-  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', function (assetsSvc, canvasSvc) {
+  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', 'time', function (assetsSvc, canvasSvc, time) {
 
     var self = this;
     // var c = {
@@ -13,10 +13,16 @@ angular.module('animationEngineApp')
     self.fxIndex = null;
     self.fxSelected = null;
 
+    self.time = time;
+
     self.assetSelected = null;
 
     self.play = function () {
         canvasSvc.init(1000, 1000);
+    };
+
+    self.stop = function () {
+        canvasSvc.stop();
     };
 
     // this should be a shallow copy to keep the service in sync with the view

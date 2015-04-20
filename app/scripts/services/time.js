@@ -8,9 +8,9 @@ engine.service('time', function () {
   self.currentTime = null;
 
   self.reset = function () {
+    console.log('time reset!');
     self.startTime = null;
     self.deltaTime = null;
     self.currentTime = null;
   };
-
 });

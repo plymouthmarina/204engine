@@ -13,45 +13,72 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
   // need key-values so we can link images to asset props ^
   var images = {};
 
+  var frameRequestId;
+
+  self.stop = function () {
+    cancelAnimationFrame(frameRequestId);
+    frameRequestId = null;
+  };
+
   self.init = function (width, height) {
-      time.reset();
+    console.log('play');
 
-      // DEEP COPY!
-      assets = angular.copy(assetsSvc.assets);
-      console.log('assets', assets);
+    // fi frameRequestId is set, stop request and reset value
+    if (frameRequestId) {
+      self.stop();
+    }
 
-      canvas = document.getElementById('canvas');
-      context = canvas.getContext('2d');
+    time.reset();
 
-      width = width;
-      height = height;
-      // preload images
-      assets.forEach(function (asset, index) {
-          if (asset.type === 'image') {
-              // to implement:
-              // insert img tag in dom with angular when added, then load image from that source
-              images[asset.name] = new Image();
-              images[asset.name].src = asset.src;
-          }
-      });
+    // DEEP COPY!
+    assets = angular.copy(assetsSvc.assets);
+    console.log('assets', assets);
 
-      requestAnimationFrame(self.drawFrame);
+    canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+
+    width = width;
+    height = height;
+    // preload images
+    assets.forEach(function (asset, index) {
+        if (asset.type === 'image') {
+            // to implement:
+            // insert img tag in dom with angular when added, then load image from that source
+            images[asset.name] = new Image();
+            images[asset.name].src = asset.src;
+        }
+    });
+
+    frameRequestId = requestAnimationFrame(self.drawFrame);
   };
 
   self.drawFrame = function (timestamp) {
+    console.log('drawing new frame');
 
       // set start time when animation starts
-      if (!time.start) { 
-        time.start = timestamp;
+      if (!time.startTime || time.startTime === null) { 
+        time.startTime = timestamp;
         time.currentTime = timestamp;
         time.deltaTime = 0;
+        console.log('resetting time!');
       } else {
         time.deltaTime = timestamp - time.currentTime;
+        console.log(time.deltaTime, timestamp - time.currentTime);
         time.currentTime = timestamp;
       }
 
+      console.log('current time', time.currentTime);
+      console.log('timestamp', timestamp);
+      console.log('delta', time.deltaTime);
+      console.log('time elapsed', time.currentTime - time.startTime);
+
+      // console.log('timestamp', timestamp);
+      // console.log('current', time.currentTime);
+      // // console.log('start', time.start);
+      // console.log('delta', time.deltaTime);
+
       // calculate time elapsed
-      var timeElapsed = timestamp - time.start;
+      var timeElapsed = timestamp - time.startTime;
 
       // UPDATE
       // console.log("current assets passed :", assets);
@@ -83,6 +110,6 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
           }
       });
 
-      requestAnimationFrame(self.drawFrame);
+      frameRequestId = requestAnimationFrame(self.drawFrame);
   };
 }]);
