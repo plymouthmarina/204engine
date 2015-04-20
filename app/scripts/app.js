@@ -34,3 +34,5 @@ angular
         redirectTo: '/'
       });
   });
+
+var engine = angular.module('engine', []);

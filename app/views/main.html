@@ -91,19 +91,9 @@
 
                   <div class="panel-body collapse" id="{{ effect.type + $index }}">
 
+                    <ul class="list-group">
                     <!-- TRANSLATE -->
-                    <ul class="list-group" ng-if="effect.type == 'translate'">
-<!--                       <li class="list-group-item">
-                        <label>From:</label>
-                        <div class="input-group">
-                          <span class="input-group-addon" id="basic-addon1">x</span>
-                          <input type="number" ng-model="effect.from.x">          
-                          <span class="input-group-addon" id="basic-addon1">y</span>
-                          <input type="number" ng-model="effect.from.y">          
-                        </div>
-                      </li> -->
-
-                      <li class="list-group-item">  
+                      <li class="list-group-item" ng-if="effect.type == 'translate'">  
                         <label>To:</label>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">x</span>
@@ -112,6 +102,14 @@
                           <input type="number" ng-model="effect.to.y">          
                         </div>
                       </li>
+
+                      <li class="list-group-item" ng-if="effect.type == 'scale'">
+                        <label>To:</label>
+                        <div class="input-group">
+                          <input type="number" ng-model="effect.to.scale">
+                        </div>
+                      </li>
+
 
                       <li class="list-group-item">
                         <label>Start:</label>
@@ -158,9 +156,12 @@
      <div class="form-group">
        <label>Select Asset to affect:</label>
         <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.fxIndex"></select>
-       <a class="btn btn-primary" ng-click="main.addTranslate(main.fxIndex, 5000, 1000, 100, 100)">Add Effect</a>
      </div>
-     
+     <div class="form-group">
+       <label>effect to apply:</label>
+       <select ng-options="key for (key, value) in main.fxTemplates" ng-model="main.fxSelected"></select>
+     </div>
+       <a class="btn btn-primary" ng-click="main.addEffect(main.fxIndex, main.fxSelected)">Add Effect</a>
 
      <div class="form-group">
        <label>Add new asset:</label>

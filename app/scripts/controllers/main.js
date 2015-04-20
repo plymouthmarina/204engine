@@ -9,7 +9,10 @@ angular.module('animationEngineApp')
     //     height: 1000
     // };
 
+    // first is asset selected, second is effect to be applied
     self.fxIndex = null;
+    self.fxSelected = null;
+
     self.assetSelected = null;
 
     self.play = function () {
@@ -19,13 +22,27 @@ angular.module('animationEngineApp')
     // this should be a shallow copy to keep the service in sync with the view
     self.assets = assetsSvc.assets;
 
+    self.addEffect = function (index, effect) {
+        if (!index) {
+            console.log('Current asset: ' + index);
+            return console.error('No asset index selected');
+        }
+
+        console.log('effect: ', effect.type);
+
+        var asset = assetsSvc.assets[index];
+        var params = angular.copy(self.fxTemplates[effect.type]);
+
+        asset.effects.push(params);
+    };
+
     self.addTranslate = function (index, start, dur, destX, destY) {
         if (!index) {
             console.log('Current asset: ' + index);
             return console.error('No asset index selected');
         }
 
-        var asset = assetSvc.assets[index];
+        var asset = assetsSvc.assets[index];
 
         var params = {
             type: 'translate',
@@ -79,6 +96,33 @@ angular.module('animationEngineApp')
 
     self.deleteAsset = function (assetIndex) {
         assetsSvc.assets.splice(assetIndex, 1);
+    };
+
+    self.fxTemplates = {
+        scale: {
+            type: 'scale',
+            from: {
+                scale: null
+            },
+            to: {
+                scale: null
+            },
+            startTime: null,
+            duration: null
+        },
+        translate: {
+            type: 'translate',
+            from: {
+                x: null,
+                y: null
+            },
+            to: {
+                x: null,
+                y: null
+            },
+            startTime: null,
+            duration: null,
+        }
     };
 
     self.templates = {
