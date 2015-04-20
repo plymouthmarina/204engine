@@ -25,13 +25,13 @@ angular.module('animationEngineApp')
             return console.error('No asset index selected');
         }
 
-        var asset = self.assets[index];
+        var asset = assetSvc.assets[index];
 
         var params = {
             type: 'translate',
             from: {
-                x: 800,
-                y: 800
+                x: null,
+                y: null
             },
             to: {
                 x: destX,
@@ -43,19 +43,42 @@ angular.module('animationEngineApp')
 
         asset.effects.push(params);
 
-        console.log(self.assets);
+        console.log(assetsSvc.assets);
+    };
+
+    self.addScale = function (index, start, dur, destScale) {
+        if (!index) {
+            console.log('current asset: ' + index);
+            return console.error('No asset selected!');
+        }
+
+        var asset = assetsSvc.assets[index];
+        var params = {
+            type: 'scale',
+            from: {
+                scale: null
+            },
+            to: {
+                scale: destScale
+            },
+            startTime: start,
+            duration: dur
+        };
+
+        asset.effects.push(params);
+        console.log(assetsSvc.assets);
     };
 
     self.deleteEffect = function (assetIndex, fxIndex) {
-        self.assets[assetIndex].effects.splice(fxIndex, 1);
+        assetsSvc.assets[assetIndex].effects.splice(fxIndex, 1);
     };
 
     self.addAsset = function () {
-        self.assets.push(self.assetSelected);
+        assetsSvc.assets.push(self.assetSelected);
     };
 
     self.deleteAsset = function (assetIndex) {
-        self.assets.splice(assetIndex, 1);
+        assetsSvc.assets.splice(assetIndex, 1);
     };
 
     self.templates = {
@@ -65,6 +88,7 @@ angular.module('animationEngineApp')
             fill: '#777',
             x: 0,
             y: 0,
+            scale: 100,
             width: canvas.width,
             height: canvas.height,
             effects: []
@@ -75,6 +99,7 @@ angular.module('animationEngineApp')
             src: null,
             x: 0,
             y: 0,
+            scale: 100,
             width: 100,
             height: 100,
             effects: []

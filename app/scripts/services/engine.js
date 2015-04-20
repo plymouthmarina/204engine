@@ -9,6 +9,7 @@
             fill: '#666',
             x: 0,
             y: 0,
+            scale: 100,
             width: 1000,
             height: 1000,
             effects: []
@@ -18,6 +19,7 @@
             src: 'images/smiley.jpg',
             x: 200,
             y: 200,
+            scale: 100,
             width: 100,
             height: 100,
             effects: [ 
@@ -76,18 +78,24 @@
       // calculate delta per milisecond
       var incX = (effect.to.x - effect.from.x) / effect.duration;
       var incY = (effect.to.y - effect.from.y) / effect.duration;
-      // console.log('delta x per milisecond: ', incX);
 
       // should do: new pos = current pos + (timeElapsedSinceLastDraw *incX)
       // does: new pos = current pos + (timeElapsedSinceStart *incX)
       asset.x = asset.x + (incX * time.deltaTime);
       asset.y = asset.y + (incY * time.deltaTime);
-      // console.log("time elapsed", incX * (timestamp - effect.startTime));
-
-      // console.log('current x: ' + asset.x + ' dest x: ' + effect.to.x);
 
       // note to self: we're passing by reference here dummy, so just change obj properties :)
-      // return { x: incX * (timestamp - startTime), y: incY * (timestamp - startTime) };
+  };
+
+  this.scale = function (asset, effect, timestamp) {
+
+    if (typeof effect.from.scale !== 'number' || effect.from.scale === null) {
+      effect.from.scale = asset.scale;
+    }
+
+    var inc = (effect.to.scale - effect.from.scale) / effect.duration;
+    asset.scale = asset.scale + (inc * time.deltaTime);
+
   };
 }])
 
@@ -111,7 +119,7 @@
 
       // DEEP COPY!
       assets = angular.copy(assetsSvc.assets);
-      console.log("asset as to be drawn", assets);
+      console.log('assets', assets);
 
       canvas = document.getElementById('canvas');
       context = canvas.getContext('2d');
@@ -120,7 +128,6 @@
       height = height;
       // preload images
       assets.forEach(function (asset, index) {
-          console.log('asset ' + index);
           if (asset.type === 'image') {
               // to implement:
               // insert img tag in dom with angular when added, then load image from that source
@@ -143,14 +150,10 @@
         time.deltaTime = timestamp - time.currentTime;
         time.currentTime = timestamp;
       }
-      // console.log('delta time', time.deltaTime);
-      // console.log("start", start);
 
       // calculate time elapsed
       var timeElapsed = timestamp - time.start;
-      // console.log("dTime", timeElapsed);
 
-      // var assets = assetsSvc.getAssets();
       // UPDATE
       // console.log("current assets passed :", assets);
       assets.forEach(function (asset, index) {
@@ -158,7 +161,8 @@
             asset.effects.forEach(function (effect, index) {
                 // check if effects function needs to be called
                 if (effect.startTime <= timeElapsed && (effect.startTime + effect.duration) > timeElapsed) {
-                    fx.translate(asset, effect, timeElapsed);
+                    // fx.translate(asset, effect, timeElapsed);
+                    fx[effect.type](asset, effect, timeElapsed);
                 }
             });
           }
@@ -169,8 +173,6 @@
       context.clearRect(0, 0, width, height);
 
       assets.forEach(function (asset, index) {
-          // console.log("length", assets);
-          // console.log('please draw me', index);
 
           if (asset.type === 'rect') {
               context.rect(asset.x, asset.y, asset.width, asset.height);
