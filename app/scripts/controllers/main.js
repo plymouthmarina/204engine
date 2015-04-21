@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 
 angular.module('animationEngineApp')
   .controller('MainCtrl', ['assetsSvc', 'canvasSvc', 'time', function (assetsSvc, canvasSvc, time) {
@@ -128,6 +128,17 @@ angular.module('animationEngineApp')
             },
             startTime: null,
             duration: null,
+        },
+        rotate: {
+            type: 'rotate',
+            from: {
+                rotation: null,
+            },
+            to: {
+                rotation: null,
+            },
+            startTime: null,
+            duration: null,
         }
     };
 
@@ -152,6 +163,19 @@ angular.module('animationEngineApp')
             scale: 100,
             width: 100,
             height: 100,
+            effects: []
+        },
+        spritesheet: {
+            name: 'spritesheet',
+            type: 'spritesheet',
+            src: null,
+            x: 0,
+            y: 0,
+            scale: 100,
+            width: 100,
+            height: 100,
+            frames: 9,
+            framesPerSecond:1,
             effects: []
         }
     };

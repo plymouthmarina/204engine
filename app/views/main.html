@@ -44,7 +44,7 @@
             <div class="panel-body">
               <p><strong>Type: </strong>{{ asset.type }}</p>
 
-              <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image'">
+              <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
 
               <div class="form-group" ng-if="asset.type === 'rect'">
                 <label>fill (hex):</label>
@@ -52,12 +52,27 @@
               </div>
               
               <div class="form-group">
-                <input type="text" ng-model="asset.src" ng-if="asset.type === 'image'">
+                <input type="text" ng-model="asset.src" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
+              </div>
+              
+              <div class="form-group" ng-if="asset.type === 'spritesheet'">
+                <label>Frames</label>  
+                <input type="number" ng-model="asset.frames">
+              </div>
+              
+              <div class="form-group" ng-if="asset.type === 'spritesheet'">
+                <label>Frames Per Second</label>  
+                <input type="number" ng-model="asset.framesPerSecond">
               </div>
 
               <div class="form-group">
                 <label>Scale</label>
                 <input type="number" ng-model="asset.scale">
+              </div>
+              
+               <div class="form-group">
+                <label>Rotation</label>
+                <input type="number" ng-model="asset.rotation">
               </div>
 
               <div class="form-group">
