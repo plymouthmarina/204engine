@@ -10,6 +10,7 @@ engine.service('assetsSvc', function () {
             x: 0,
             y: 0,
             scale: 100,
+            rotation: 0,
             width: 1000,
             height: 1000,
             effects: []
@@ -20,6 +21,7 @@ engine.service('assetsSvc', function () {
             x: 200,
             y: 200,
             scale: 100,
+            rotation: 0,
             width: 100,
             height: 100,
             effects: [ 
@@ -35,6 +37,57 @@ engine.service('assetsSvc', function () {
                     },
                     startTime: 1000,
                     duration: 2000
+                },
+                {
+                    type: 'rotate',
+                    from: {
+                        rotation: null,
+                    },
+                    to: {
+                        rotation: 180,
+                    },
+                    startTime: 2000,
+                    duration: 2000
+                                    
+                }
+            ]
+        }, {
+            name: 'explosion',
+            type: 'spritesheet',
+            src: 'images/fire_explosion.png',
+            frames: 9,
+            framesPerSecond: 9,
+            x: 0,
+            y: 0,
+            scale: 100,
+            rotation: 0,
+            width: 128,
+            height: 128,
+            effects: [ 
+                {   
+                    type: 'translate',
+                    from: {
+                        x: null,
+                        y: null
+                    },
+                    to: {
+                        x: 500,
+                        y: 500
+                    },
+                    startTime: 0,
+                    duration: 2000
+                },
+                {
+                    type: 'rotate',
+                    from: {
+                        rotation: null,
+                    },
+                    to: {
+                        rotation: 180,
+                    },
+                    startTime: 2000,
+                    duration: 2000
+                                    
                 }
             ]
         }

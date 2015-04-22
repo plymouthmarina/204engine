@@ -31,4 +31,15 @@ engine.service('fx', ['time', function (time) {
     asset.scale = asset.scale + (inc * time.deltaTime);
 
   };
+  
+  this.rotate = function (asset, effect, timestamp){
+      
+    if (typeof effect.from.rotation !== 'number' || effect.from.rotation === null) {
+      effect.from.rotation = asset.rotation;
+    }
+      
+    var degrees = (effect.to.rotation - effect.from.rotation) / effect.duration;
+    asset.rotation = asset.rotation + (degrees * time.deltaTime); 
+      
+  }
 }]);

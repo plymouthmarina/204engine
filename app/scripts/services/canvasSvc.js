@@ -41,7 +41,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
     height = height;
     // preload images
     assets.forEach(function (asset, index) {
-        if (asset.type === 'image') {
+        if (asset.type === 'image' || asset.type === 'spritesheet') {
             // to implement:
             // insert img tag in dom with angular when added, then load image from that source
             images[asset.name] = new Image();
@@ -97,19 +97,61 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       // DRAW
       // clear canvas
       context.clearRect(0, 0, width, height);
-
+      
       assets.forEach(function (asset, index) {
+          
+            // save the unrotated context of the canvas so we can restore it later
+            // the alternative is to untranslate & unrotate after drawing
+            context.save();
+          
+            if (asset.rotation !== 0){ 
+          
+             
+                // move to the center of the canvas
+                context.translate(self.width/2, self.height/2);
 
-          if (asset.type === 'rect') {
-              context.rect(asset.x, asset.y, (asset.width/100) * asset.scale, (asset.height/100) * asset.scale);
-              context.fillStyle=asset.fill;
-              context.fill();
-          }
-          else if (asset.type === 'image') {
-              context.drawImage(images[asset.name], asset.x, asset.y, images[asset.name].width * (asset.scale / 100), images[asset.name].height * (asset.scale / 100));
-          }
+                // rotate the canvas to the specified degrees
+                context.rotate(asset.rotation*Math.PI/180);
+                
+                asset.x -= asset.width/2;
+                asset.y -= asset.height/2;
+            }
+          
+            switch (asset.type) {
+                case 'rect':
+                    context.rect(asset.x, asset.y, (asset.width/100) * asset.scale, (asset.height/100) * asset.scale);
+                    context.fillStyle=asset.fill;
+                    context.fill();
+                    break;
+                case 'image':
+                    context.drawImage(images[asset.name], asset.x, asset.y, images[asset.name].width * (asset.scale / 100), images[asset.name].height * (asset.scale / 100));
+                    break;
+                
+                case 'spritesheet':
+                    self.drawSpriteSheet(asset, images[asset.name], timeElapsed);
+                    break;
+            }
+            
+            // we’re done with the rotating so restore the unrotated context
+            context.restore();
+
       });
 
       frameRequestId = requestAnimationFrame(self.drawFrame);
   };
+  
+  self.drawSpriteSheet = function (asset, image, timeElapsed) {
+      var frame = Math.floor(timeElapsed * asset.framesPerSecond / 1000);
+      if(frame >= asset.frames)
+      {
+          frame = frame % asset.frames;
+      }
+
+      var x = frame * asset.width;
+      var width = asset.width * (asset.scale / 100);
+      var height = asset.height * (asset.scale / 100);
+
+      context.drawImage(image, x, 0, width, height, asset.x, asset.y, width, height);
+  };
+  
 }]);
