@@ -10,6 +10,7 @@ engine.service('assetsSvc', function () {
             x: 0,
             y: 0,
             scale: 100,
+            opacity: 1,
             rotation: 0,
             width: 1000,
             height: 1000,
@@ -21,6 +22,7 @@ engine.service('assetsSvc', function () {
             x: 200,
             y: 200,
             scale: 100,
+            opacity: 1,
             rotation: 0,
             width: 100,
             height: 100,
@@ -46,9 +48,20 @@ engine.service('assetsSvc', function () {
                     to: {
                         rotation: 180,
                     },
-                    startTime: 2000,
+                    startTime: 1000,
                     duration: 2000
                                     
+                },
+                {
+                    type: 'fade',
+                    from:{
+                        opacity: null
+                    },
+                    to:{
+                        opacity: 0.25
+                    },
+                    startTime: 1000,
+                    duration: 2000,
                 }
             ]
         }, {
@@ -60,6 +73,7 @@ engine.service('assetsSvc', function () {
             x: 0,
             y: 0,
             scale: 100,
+            opacity: 1,
             rotation: 0,
             width: 128,
             height: 128,

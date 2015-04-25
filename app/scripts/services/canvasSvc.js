@@ -100,31 +100,42 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       
       assets.forEach(function (asset, index) {
           
+            // calculate scaled width and height of asset as we need to know for rotation
+            var scaledWidth = asset.width * (asset.scale / 100);
+            var scaledHeight = asset.height * (asset.scale / 100);
+
             // save the unrotated context of the canvas so we can restore it later
             // the alternative is to untranslate & unrotate after drawing
             context.save();
+
+            if (asset.opacity !== 0){
+                context.globalAlpha = asset.opacity;
+            }
           
             if (asset.rotation !== 0){ 
           
+                // calculate centre point of asset
+                var cx = asset.x + scaledWidth * 0.5;
+                var cy = asset.y + scaledHeight * 0.5;
              
-                // move to the center of the canvas
-                context.translate(self.width/2, self.height/2);
+                // move to centre of asset
+                context.translate(cx, cy);
 
                 // rotate the canvas to the specified degrees
                 context.rotate(asset.rotation*Math.PI/180);
                 
-                asset.x -= asset.width/2;
-                asset.y -= asset.height/2;
+                // move back to 0x0
+                context.translate(-cx, -cy);
             }
           
             switch (asset.type) {
                 case 'rect':
-                    context.rect(asset.x, asset.y, (asset.width/100) * asset.scale, (asset.height/100) * asset.scale);
+                    context.rect(asset.x, asset.y, scaledWidth, scaledHeight);
                     context.fillStyle=asset.fill;
                     context.fill();
                     break;
                 case 'image':
-                    context.drawImage(images[asset.name], asset.x, asset.y, images[asset.name].width * (asset.scale / 100), images[asset.name].height * (asset.scale / 100));
+                    context.drawImage(images[asset.name], asset.x, asset.y, scaledWidth, scaledHeight);
                     break;
                 
                 case 'spritesheet':
