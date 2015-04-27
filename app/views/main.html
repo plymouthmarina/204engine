@@ -99,12 +99,12 @@
                   
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <p data-toggle="collapse" ng-href="#{{ effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
+                      <p data-toggle="collapse" ng-href="#{{ $parent.$index + '-' + effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
                     </h4>
                     <a class="delete" ng-click="main.deleteEffect($parent.$index, $index)">Delete</a>
                   </div>
 
-                  <div class="panel-body collapse" id="{{ effect.type + $index }}">
+                  <div class="panel-body collapse" id="{{ $parent.$index + '-' + effect.type + $index }}">
 
                     <ul class="list-group">
                     <!-- TRANSLATE -->
@@ -118,6 +118,7 @@
                         </div>
                       </li>
 
+                      <!-- SCALE -->
                       <li class="list-group-item" ng-if="effect.type == 'scale'">
                         <label>To:</label>
                         <div class="input-group">

@@ -4,7 +4,7 @@ engine.service('fx', ['time', function (time) {
   this.translate = function (asset, effect, timestamp) {
       // save start values x & y to calculate increments
       if (typeof effect.from.x !== 'number' || effect.from.x === null) {
-          console.log('set effect starting point');
+          // console.log('set effect starting point');
           effect.from.x = asset.x;
           effect.from.y = asset.y;
       }
