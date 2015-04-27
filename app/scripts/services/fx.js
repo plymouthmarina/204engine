@@ -31,15 +31,26 @@ engine.service('fx', ['time', function (time) {
     asset.scale = asset.scale + (inc * time.deltaTime);
 
   };
-  
+
   this.rotate = function (asset, effect, timestamp){
-      
+
     if (typeof effect.from.rotation !== 'number' || effect.from.rotation === null) {
       effect.from.rotation = asset.rotation;
     }
-      
+
     var degrees = (effect.to.rotation - effect.from.rotation) / effect.duration;
-    asset.rotation = asset.rotation + (degrees * time.deltaTime); 
-      
+    asset.rotation = asset.rotation + (degrees * time.deltaTime);
+
+  }
+
+  this.fade = function (asset, effect, timestamp){
+
+    if (typeof effect.from.opacity !== 'number' || effect.from.opacity === null) {
+      effect.from.opacity = asset.opacity;
+    }
+
+    var inc = (effect.to.opacity - effect.from.opacity) / effect.duration;
+    asset.opacity = asset.opacity + (inc * time.deltaTime);
+
   }
 }]);
