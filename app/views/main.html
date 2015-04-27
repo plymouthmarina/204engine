@@ -50,18 +50,18 @@
                 <label>fill (hex):</label>
                 <input type="text" ng-model="asset.fill">
               </div>
-              
+
               <div class="form-group">
                 <input type="text" ng-model="asset.src" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
               </div>
-              
+
               <div class="form-group" ng-if="asset.type === 'spritesheet'">
-                <label>Frames</label>  
+                <label>Frames</label>
                 <input type="number" ng-model="asset.frames">
               </div>
-              
+
               <div class="form-group" ng-if="asset.type === 'spritesheet'">
-                <label>Frames Per Second</label>  
+                <label>Frames Per Second</label>
                 <input type="number" ng-model="asset.framesPerSecond">
               </div>
 
@@ -69,15 +69,20 @@
                 <label>Scale</label>
                 <input type="number" ng-model="asset.scale">
               </div>
-              
+
                <div class="form-group">
                 <label>Rotation</label>
                 <input type="number" ng-model="asset.rotation">
               </div>
 
               <div class="form-group">
+                <label>Opacity</label>
+                <input type="number" ng-model="asset.opacity">
+              </div>
+
+              <div class="form-group">
                   <label>Width</label>
-                  <input type="number" ng-model="asset.width">  
+                  <input type="number" ng-model="asset.width">
               </div>
               <div class="form-group">
                 <label>Height</label>
@@ -86,7 +91,7 @@
 
               <div class="form-group">
                   <label>X:</label>
-                  <input type="number" ng-model="asset.x">  
+                  <input type="number" ng-model="asset.x">
               </div>
               <div class="form-group">
                 <label>Y:</label>
@@ -96,7 +101,7 @@
 
               <div class="panel-group">
                 <div class="panel panel-default" ng-repeat="effect in asset.effects">
-                  
+
                   <div class="panel-heading">
                     <h4 class="panel-title">
                       <p data-toggle="collapse" ng-href="#{{ effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
@@ -108,13 +113,13 @@
 
                     <ul class="list-group">
                     <!-- TRANSLATE -->
-                      <li class="list-group-item" ng-if="effect.type == 'translate'">  
+                      <li class="list-group-item" ng-if="effect.type == 'translate'">
                         <label>To:</label>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">x</span>
-                          <input type="number" ng-model="effect.to.x">          
+                          <input type="number" ng-model="effect.to.x">
                           <span class="input-group-addon" id="basic-addon1">y</span>
-                          <input type="number" ng-model="effect.to.y">          
+                          <input type="number" ng-model="effect.to.y">
                         </div>
                       </li>
 
@@ -125,6 +130,12 @@
                         </div>
                       </li>
 
+                      <li class="list-group-item" ng-if="effect.type == 'fade'">
+                        <label>To:</label>
+                        <div class="input-group">
+                          <input type="number" ng-model="effect.to.opacity">
+                        </div>
+                      </li>
 
                       <li class="list-group-item">
                         <label>Start:</label>
@@ -151,11 +162,11 @@
 
 
    <div class="col-lg-6 panel">
-     <enginedir>Your browser doesn't seem to support HTML5</enginedir>     
+     <enginedir>Your browser doesn't seem to support HTML5</enginedir>
    </div>
 
 
-     
+
 
    <div class="col-lg-2 panel panel-fx">
      <h1>Right column</h1>
@@ -178,6 +189,6 @@
 
      <a class="btn btn-warning" ng-click="main.play()">PLAAAYYYY</a>
      <a class="btn btn-danger" ng-click="main.stop()">STOP</a>
-     
+
    </div>
  </div>

@@ -139,6 +139,17 @@ angular.module('animationEngineApp')
             },
             startTime: null,
             duration: null,
+        },
+        fade: {
+            type: 'opacity',
+            from:{
+                opacity: null
+            },
+            to:{
+                opacity: null
+            },
+            startTime: null,
+            duration: null,
         }
     };
 
