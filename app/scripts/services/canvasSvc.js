@@ -46,6 +46,8 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         // insert img tag in dom with angular when added, then load image from that source
         images[asset.name] = new Image();
         images[asset.name].src = asset.src;
+      } else if (asset.type === 'audio') {
+        // load audio asset
       }
     });
 
@@ -66,16 +68,6 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         // console.log(time.deltaTime, timestamp - time.currentTime);
         time.currentTime = timestamp;
       }
-
-      // console.log('current time', time.currentTime);
-      // console.log('timestamp', timestamp);
-      // console.log('delta', time.deltaTime);
-      // console.log('time elapsed', time.currentTime - time.startTime);
-
-      // console.log('timestamp', timestamp);
-      // console.log('current', time.currentTime);
-      // // console.log('start', time.start);
-      // console.log('delta', time.deltaTime);
 
       // calculate time elapsed
       var timeElapsed = timestamp - time.startTime;
@@ -140,6 +132,11 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
           case 'spritesheet':
             self.drawSpriteSheet(asset, images[asset.name], timeElapsed);
             break;
+
+          case 'audio': 
+            if (timestamp > asset.start && !asset.playing ) {
+              // start audio
+            }
         }           
 
       });

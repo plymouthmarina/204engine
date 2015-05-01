@@ -188,6 +188,13 @@ angular.module('animationEngineApp')
             frames: 9,
             framesPerSecond:1,
             effects: []
+        },
+        audio: {
+            name: 'music',
+            type: 'audio',
+            src: null,
+            start: 0,
+            playing: false
         }
     };
 }]);
