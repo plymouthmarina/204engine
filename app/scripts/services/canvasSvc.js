@@ -137,7 +137,10 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
             if (timestamp > asset.start && !asset.playing ) {
               // start audio
             }
-        }           
+        }
+
+        // we’re done with the rotating so restore the unrotated context
+        context.restore();
 
       });
 
