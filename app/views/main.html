@@ -131,6 +131,14 @@
                         </div>
                       </li>
 
+                      <!-- ROTATE -->
+                      <li class="list-group-item" ng-if="effect.type == 'rotate'">
+                        <label>To:</label>
+                        <div class="input-group">
+                          <input type="number" ng-model="effect.to.rotation">
+                        </div>
+                      </li>
+
                       <li class="list-group-item" ng-if="effect.type == 'fade'">
                         <label>To:</label>
                         <div class="input-group">
