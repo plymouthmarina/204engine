@@ -12,6 +12,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
   // global vars
   // need key-values so we can link images to asset props ^
   var images = {};
+  var audios = {};
 
   var frameRequestId;
 
@@ -47,7 +48,8 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         images[asset.name] = new Image();
         images[asset.name].src = asset.src;
       } else if (asset.type === 'audio') {
-        // load audio asset
+        // register the sound file with soundjs
+        createjs.Sound.registerSound(asset.src, asset.name);
       }
     });
 
@@ -58,7 +60,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
     // console.log('drawing new frame');
 
       // set start time when animation starts
-      if (!time.startTime || time.startTime === null) { 
+      if (!time.startTime || time.startTime === null) {
         time.startTime = timestamp;
         time.currentTime = timestamp;
         time.deltaTime = 0;
@@ -89,7 +91,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       // DRAW
       // clear canvas
       context.clearRect(0, 0, width, height);
-      
+
       assets.forEach(function (asset, index) {
         // calculate scaled width and height of asset as we need to know for rotation
         var scaledWidth = asset.width * (asset.scale / 100);
@@ -102,23 +104,23 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         if (asset.opacity !== 0){
           context.globalAlpha = asset.opacity;
         }
-      
-        if (asset.rotation !== 0){ 
-    
+
+        if (asset.rotation !== 0){
+
           // calculate centre point of asset
           var cx = asset.x + scaledWidth * 0.5;
           var cy = asset.y + scaledHeight * 0.5;
-       
+
           // move to centre of asset
           context.translate(cx, cy);
 
           // rotate the canvas to the specified degrees
           context.rotate(asset.rotation*Math.PI/180);
-          
+
           // move back to 0x0
           context.translate(-cx, -cy);
         }
-      
+
         switch (asset.type) {
           case 'rect':
             context.rect(asset.x, asset.y, scaledWidth, scaledHeight);
@@ -128,14 +130,14 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
           case 'image':
             context.drawImage(images[asset.name], asset.x, asset.y, scaledWidth, scaledHeight);
             break;
-        
+
           case 'spritesheet':
             self.drawSpriteSheet(asset, images[asset.name], timeElapsed);
             break;
 
-          case 'audio': 
-            if (timestamp > asset.start && !asset.playing ) {
-              // start audio
+          case 'audio':
+            if (timeElapsed > asset.start && !asset.playing ) {
+              self.playAudio(asset);
             }
         }
 
@@ -146,7 +148,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
 
       frameRequestId = requestAnimationFrame(self.drawFrame);
   };
-  
+
   self.drawSpriteSheet = function (asset, image, timeElapsed) {
     var frame = Math.floor(timeElapsed * asset.framesPerSecond / 1000);
     if(frame >= asset.frames) {
@@ -159,5 +161,18 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
 
     context.drawImage(image, x, 0, width, height, asset.x, asset.y, width, height);
   };
-  
+
+  self.playAudio = function (asset) {
+      // mark as playing to prevent further calls
+      asset.playing = true;
+
+      // play the audio file, only recreating if not already created
+      if(!asset.audio) {
+          asset.audio = createjs.Sound.play(asset.name, createjs.SoundJS.INTERRUPT_ALL);
+      }
+      else {
+          asset.audio.play();
+      }
+  };
+
 }]);

@@ -26,8 +26,8 @@ engine.service('assetsSvc', function () {
             rotation: 0,
             width: 100,
             height: 100,
-            effects: [ 
-                {   
+            effects: [
+                {
                     type: 'translate',
                     from: {
                         x: null,
@@ -50,7 +50,7 @@ engine.service('assetsSvc', function () {
                     },
                     startTime: 1000,
                     duration: 2000
-                                    
+
                 },
                 {
                     type: 'fade',
@@ -77,8 +77,8 @@ engine.service('assetsSvc', function () {
             rotation: 0,
             width: 128,
             height: 128,
-            effects: [ 
-                {   
+            effects: [
+                {
                     type: 'translate',
                     from: {
                         x: null,
@@ -101,9 +101,15 @@ engine.service('assetsSvc', function () {
                     },
                     startTime: 2000,
                     duration: 2000
-                                    
+
                 }
             ]
+        }, {
+            name: 'explosion-sound',
+            type: 'audio',
+            src: 'audio/thunder.mp3',
+            start: 1000,
+            playing: false
         }
     ];
 
