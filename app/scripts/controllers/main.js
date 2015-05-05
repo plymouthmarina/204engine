@@ -25,8 +25,22 @@ angular.module('animationEngineApp')
         canvasSvc.stop();
     };
 
-    // this should be a shallow copy to keep the service in sync with the view
-    self.assets = assetsSvc.assets;
+    if (localStorage.getItem('assets')) {
+        console.log('stuff found in localstorage');
+        var lcl = JSON.parse(localStorage.getItem('assets'));
+        assetsSvc.assets = angular.copy(lcl);
+        console.log(lcl);
+        // this should be a shallow copy to keep the service in sync with the view
+        self.assets = assetsSvc.assets;
+    } else {
+        console.log('nothing found, just getting default');
+        self.assets = assetsSvc.assets;
+    }
+
+    self.save = function () {
+        console.log('save stuff local');
+        localStorage.setItem('assets', JSON.stringify(assetsSvc.assets));
+    };
 
     self.addEffect = function (index, effect) {
         if (!index) {
@@ -41,6 +55,7 @@ angular.module('animationEngineApp')
 
         asset.effects.push(params);
     };
+
 
     self.addTranslate = function (index, start, dur, destX, destY) {
         if (!index) {
