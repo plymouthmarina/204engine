@@ -107,7 +107,7 @@ engine.service('assetsSvc', function () {
         }, {
             name: 'explosion-sound',
             type: 'audio',
-            src: 'audio/thunder.mp3',
+            src: 'audio/thunder.ogg',
             start: 1000,
             playing: false
         }

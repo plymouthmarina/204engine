@@ -48,8 +48,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         images[asset.name] = new Image();
         images[asset.name].src = asset.src;
       } else if (asset.type === 'audio') {
-        // register the sound file with soundjs
-        createjs.Sound.registerSound(asset.src, asset.name);
+        asset.audio = new buzz.sound(asset.src);
       }
     });
 
@@ -166,13 +165,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       // mark as playing to prevent further calls
       asset.playing = true;
 
-      // play the audio file, only recreating if not already created
-      if(!asset.audio) {
-          asset.audio = createjs.Sound.play(asset.name, createjs.SoundJS.INTERRUPT_ALL);
-      }
-      else {
-          asset.audio.play();
-      }
+      asset.audio.play();
   };
 
 }]);
