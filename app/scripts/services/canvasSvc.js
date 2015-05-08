@@ -7,7 +7,8 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
   var canvas = null;
   var context = null;
 
-  var width, height = 1000;
+  var width = 1240;
+  var height = 720;
 
   // global vars
   // need key-values so we can link images to asset props ^

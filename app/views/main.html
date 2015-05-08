@@ -24,30 +24,38 @@
  -->
 
  <div class="row">
-   <div class="col-lg-4">
-     <div class="panel panel-default">
-        <div class="panel-heading">
-          <h1 class="panel-title">Asset properties</h1>
+   <div class="col-lg-2" id="column2">
+     <div class="panel panel-default" id="assetPanel">
+        <div class="panel-heading" id="assetStack">
+          <h1 class="panel-title">Asset Stack</h1>
         </div> <!-- panel-heading -->
 
         <!-- List Assets -->
-        <div class="panel-group">
-          <div class="panel panel-default" ng-repeat="asset in main.assets">
+        <div class="panel-group" id="panelGroupLeft" role="tablist">
+          <div class="panel panel-default panelField" ng-repeat="asset in main.assets">
 
-            <div class="panel-heading">
+            <div class="panel-heading"  role="tab" id="asset_heading_{{ $index }}">
               <h4 class="panel-title">
-                {{ asset.name }}
+
+                <div class="form-group">
+                  <input type="text" ng-model="asset.name">
+                </div>
+
+                <a class="delete" ng-click="main.deleteAsset($index)"><img src="../images/delete.png" width="50" alt=""/></a>
+                <a data-toggle="collapse" data-parent="#panelGroupLeft" href="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
+                    <img src="../images/down_button.png" width="50" alt=""/>
+                </a>
               </h4>
-              <a class="delete" ng-click="main.deleteAsset($index)">Delete</a>
             </div> <!-- panel-heading -->
 
-            <div class="panel-body">
+            <div class="panel-body panel-collapse collapse" id="asset_body_{{ $index }}" role="tabpanel" aria-labelledby="asset_heading_{{ $index }}">
+
               <p><strong>Type: </strong>{{ asset.type }}</p>
 
               <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
 
               <div class="form-group" ng-if="asset.type === 'rect'">
-                <label>fill (hex):</label>
+                <label>Fill:</label>
                 <input type="text" ng-model="asset.fill">
               </div>
 
@@ -71,26 +79,26 @@
               </div>
 
               <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Scale</label>
+                <label>Scale:</label>
                 <input type="number" ng-model="asset.scale">
               </div>
 
                <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Rotation</label>
+                <label>Rotation:</label>
                 <input type="number" ng-model="asset.rotation">
               </div>
 
               <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Opacity</label>
+                <label>Opacity:</label>
                 <input type="number" ng-model="asset.opacity">
               </div>
 
               <div class="form-group" ng-if="asset.type !== 'audio'">
-                  <label>Width</label>
+                  <label>Width:</label>
                   <input type="number" ng-model="asset.width">
               </div>
               <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Height</label>
+                <label>Height:</label>
                 <input type="number" ng-model="asset.height">
               </div>
 
@@ -172,38 +180,69 @@
                 <!-- <p>{{ effect }}</p> -->
       </div>
     </div>
+
+       <textarea>{{ main.assets }}</textarea>
   </div>
 
 
-   <div class="col-lg-6 panel">
+   <div class="col-lg-8 panel" id="scene">
      <enginedir>Your browser doesn't seem to support HTML5</enginedir>
+     <div id="buttonsMain">
+         <a ng-click="main.play()"><img src="../images/play.png" width="100" alt=""/></a>
+         <a ng-click="main.stop()"><img src="../images/stop.png" width="100" alt=""/></a>
+         <a ng-click="main.save()"><img src="../images/save.png" width="100" alt=""/></a>
+     </div>
    </div>
 
 
 
 
-   <div class="col-lg-2 panel panel-fx">
-     <h1>Right column</h1>
+   <div class="col-lg-2 panel panel-fx" id="column3">
 
-     <div class="form-group">
-       <label>Select Asset to affect:</label>
-        <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.fxIndex"></select>
-     </div>
-     <div class="form-group">
-       <label>effect to apply:</label>
-       <select ng-options="key for (key, value) in main.fxTemplates" ng-model="main.fxSelected"></select>
-     </div>
-       <a class="btn btn-primary" ng-click="main.addEffect(main.fxIndex, main.fxSelected)">Add Effect</a>
+     <div class="panel panel-default" id="rightPanel">
+        <div class="panel-heading" id="add">
+          <h1 class="panel-title">Add</h1>
+        </div> <!-- panel-heading -->
 
-     <div class="form-group">
-       <label>Add new asset:</label>
-       <select ng-options="key for (key, value) in main.templates" ng-model="main.assetSelected">{{ key }}</select>
-       <a class="btn btn-primary" ng-click="main.addAsset()">Add Asset</a>
-     </div>
+        <div class="panel-group" id="panelGroupLeft">
+          <div class="panel panel-default panelField">
 
-     <a class="btn btn-warning" ng-click="main.play()">PLAAAYYYY</a>
-     <a class="btn btn-danger" ng-click="main.stop()">STOP</a>
-     <a class="btn btn-primary" ng-click="main.save()">Save</a>
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                Add a new asset
+              </h4>
+            </div> <!-- panel-heading -->
 
+            <div class="panel-body">
+              <div class="form-group">
+
+                <label>Add asset</label>
+                <select ng-options="key for (key, value) in main.templates" ng-model="main.assetSelected">{{ key }}</select>
+                <a class="btn btn-default" ng-click="main.addAsset()">Add Asset</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default panelField">
+
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                Add a new effect
+              </h4>
+            </div> <!-- panel-heading -->
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label>Asset to affect</label>
+                 <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.fxIndex"></select>
+                </div>
+                <div class="form-group">
+                  <label>Effect to apply</label>
+                  <select ng-options="key for (key, value) in main.fxTemplates" ng-model="main.fxSelected"></select>
+                </div>
+                <a class="btn btn-default" ng-click="main.addEffect(main.fxIndex, main.fxSelected)">Add Effect</a>
+            </div>
+          </div>
+        </div>
    </div>
  </div>

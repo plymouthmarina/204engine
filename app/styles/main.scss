@@ -19,7 +19,112 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   height: 100px;
 }
 
-// html, 
+body{
+    background-color: #363636;
+}
+
+#scene canvas{
+    margin: 0 auto;
+    background-color: #4F4F4F;
+    width:100%;
+}
+
+#scene{
+    background-color: #363636;
+    height:980px;
+}
+
+#assetPanel{
+    overflow: scroll;
+    height:980px;
+    background-color: #4F4F4F;
+    border: none;
+    border-radius: 0px;
+    border-shadow: 0px;
+}
+
+#panelGroupLeft{
+    background-color: #4F4F4F;
+}
+
+#panelGroupLeft label{
+    width: 70px;
+}
+
+#panelGroupLeft input{
+    color: #000000;
+}
+
+.panelField{
+    background-color: #717171;
+    color: #ffffff;
+    border: none;
+    border-radius: 0px;
+    border-shadow: 0px;
+}
+
+#engineName{
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #2D2D2D;
+}
+
+.panel-default > .panel-heading{
+    background-color: #717171;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+#column2 > .panel-default:nth-child(2) > .panel-heading:first-child{
+    margin-top: 45px;
+}
+
+#assetStack{
+    background-color: #4F4F4F;
+    color:#ffffff;
+    margin-top:0px;
+    text-align: right;
+}
+
+#add{
+    background-color: #4F4F4F;
+    color:#ffffff;
+    margin-top:0px;
+    text-align: left;
+}
+
+.panel panel-default{
+    margin-top:0px;
+}
+
+#buttonsMain{
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 150px;
+}
+
+a:hover{
+    cursor:pointer;
+}
+
+#column3{
+    background-color: #363636;
+    height:600px;
+}
+
+#rightPanel{
+    height:600px;
+    background-color: #4F4F4F;
+    border: none;
+    border-radius: 0px;
+    border-shadow: 0px;
+}
+
+#add{
+    text-align: left;
+}
+// html,as
 // body {
 //   width: 100vw;
 //   height: 100vh;
