@@ -170,11 +170,14 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         frame = frame % asset.frames;
     }
 
-    var x = frame * asset.width;
-    var width = asset.width * (asset.scale / 100);
-    var height = asset.height * (asset.scale / 100);
+    var sWidth = asset.width;
+    var sHeight = asset.height;
 
-    context.drawImage(image, x, 0, width, height, asset.x, asset.y, width, height);
+    var x = frame * asset.width;
+    var dWidth = asset.width * (asset.scale / 100);
+    var dHeight = asset.height * (asset.scale / 100);
+
+    context.drawImage(image, x, 0, sWidth, sHeight, asset.x, asset.y, dWidth, dHeight);
   };
 
   self.playAudio = function (asset) {
