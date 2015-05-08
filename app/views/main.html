@@ -113,18 +113,20 @@
 
 
               <div class="panel-group">
-                <div class="panel panel-default" ng-repeat="effect in asset.effects">
+                <div class="panel panel-default" ng-repeat="effect in asset.effects" id="effectHeading">
 
-                  <div class="panel-heading">
+                  <div class="panel-heading" id="effectHeading">
                     <h4 class="panel-title">
                       <p data-toggle="collapse" ng-href="#{{ $parent.$index + '-' + effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
                     </h4>
-                    <a class="delete" ng-click="main.deleteEffect($parent.$index, $index)">Delete</a>
+                    <a class="delete" ng-click="main.deleteEffect($parent.$index, $index)">
+                        <img src="../images/delete.png" width="50" alt=""/>
+                    </a>
                   </div>
 
                   <div class="panel-body collapse" id="{{ $parent.$index + '-' + effect.type + $index }}">
 
-                    <ul class="list-group">
+                    <ul class="list-group" id="listStyle">
                     <!-- TRANSLATE -->
                       <li class="list-group-item" ng-if="effect.type == 'translate'">
                         <label>To:</label>
@@ -152,6 +154,7 @@
                         </div>
                       </li>
 
+                      <!-- FADE -->
                       <li class="list-group-item" ng-if="effect.type == 'fade'">
                         <label>To:</label>
                         <div class="input-group">
@@ -188,9 +191,9 @@
    <div class="col-lg-8 panel" id="scene">
      <enginedir>Your browser doesn't seem to support HTML5</enginedir>
      <div id="buttonsMain">
-         <a ng-click="main.play()"><img src="../images/play.png" width="100" alt=""/></a>
-         <a ng-click="main.stop()"><img src="../images/stop.png" width="100" alt=""/></a>
-         <a ng-click="main.save()"><img src="../images/save.png" width="100" alt=""/></a>
+         <a ng-click="main.play()" class="buttonsMain2"><img src="../images/play2.png" width="100" alt=""/></a>
+         <a ng-click="main.stop()" class="buttonsMain2"><img src="../images/stop2.png" width="100" alt=""/></a>
+         <a ng-click="main.save()" class="buttonsMain2"><img src="../images/save2.png" width="100" alt=""/></a>
      </div>
    </div>
 
