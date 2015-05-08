@@ -12,7 +12,6 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
   // global vars
   // need key-values so we can link images to asset props ^
   var images = {};
-  var audios = {};
 
   var frameRequestId;
 
@@ -41,7 +40,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
     width = width;
     height = height;
     // preload images
-    assets.forEach(function (asset, index) {
+    assets.forEach(function (asset) {
       if (asset.type === 'image' || asset.type === 'spritesheet') {
         // to implement:
         // insert img tag in dom with angular when added, then load image from that source
@@ -51,6 +50,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         // register the sound file with soundjs
         console.log('loading audio');
         asset.audio = new Audio(asset.src);
+        // asset.audio.load();
       }
     });
 
@@ -77,9 +77,9 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
 
       // UPDATE
       // console.log("current assets passed :", assets);
-      assets.forEach(function (asset, index) {
+      assets.forEach(function (asset) {
         if (asset.effects) {
-          asset.effects.forEach(function (effect, index) {
+          asset.effects.forEach(function (effect) {
             // check if effects function needs to be called
             if (effect.startTime <= timeElapsed && (effect.startTime + effect.duration) > timeElapsed) {
               // fx.translate(asset, effect, timeElapsed);
@@ -93,7 +93,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       // clear canvas
       context.clearRect(0, 0, width, height);
 
-      assets.forEach(function (asset, index) {
+      assets.forEach(function (asset) {
         // calculate scaled width and height of asset as we need to know for rotation
         var scaledWidth = asset.width * (asset.scale / 100);
         var scaledHeight = asset.height * (asset.scale / 100);

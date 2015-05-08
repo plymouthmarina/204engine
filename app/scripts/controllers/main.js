@@ -1,7 +1,7 @@
- 'use strict';
+'use strict';
 
 angular.module('animationEngineApp')
-  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', 'time', function (assetsSvc, canvasSvc, time) {
+  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', function (assetsSvc, canvasSvc) {
 
     var self = this;
     // var c = {
@@ -12,8 +12,6 @@ angular.module('animationEngineApp')
     // first is asset selected, second is effect to be applied
     self.fxIndex = null;
     self.fxSelected = null;
-
-    self.time = time;
 
     self.assetSelected = null;
 

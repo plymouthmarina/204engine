@@ -1,7 +1,7 @@
 engine.service('fx', ['time', function (time) {
   'use strict';
 
-  this.translate = function (asset, effect, timestamp) {
+  this.translate = function (asset, effect) {
       // save start values x & y to calculate increments
       if (typeof effect.from.x !== 'number' || effect.from.x === null) {
           // console.log('set effect starting point');
@@ -21,7 +21,7 @@ engine.service('fx', ['time', function (time) {
       // note to self: we're passing by reference here dummy, so just change obj properties :)
   };
 
-  this.scale = function (asset, effect, timestamp) {
+  this.scale = function (asset, effect) {
 
     if (typeof effect.from.scale !== 'number' || effect.from.scale === null) {
       effect.from.scale = asset.scale;
@@ -32,7 +32,7 @@ engine.service('fx', ['time', function (time) {
 
   };
 
-  this.rotate = function (asset, effect, timestamp){
+  this.rotate = function (asset, effect){
 
     if (typeof effect.from.rotation !== 'number' || effect.from.rotation === null) {
       effect.from.rotation = asset.rotation;
@@ -41,9 +41,9 @@ engine.service('fx', ['time', function (time) {
     var degrees = (effect.to.rotation - effect.from.rotation) / effect.duration;
     asset.rotation = asset.rotation + (degrees * time.deltaTime);
 
-  }
+  };
 
-  this.fade = function (asset, effect, timestamp){
+  this.fade = function (asset, effect){
 
     if (typeof effect.from.opacity !== 'number' || effect.from.opacity === null) {
       effect.from.opacity = asset.opacity;
@@ -52,5 +52,5 @@ engine.service('fx', ['time', function (time) {
     var inc = (effect.to.opacity - effect.from.opacity) / effect.duration;
     asset.opacity = asset.opacity + (inc * time.deltaTime);
 
-  }
+  };
 }]);
