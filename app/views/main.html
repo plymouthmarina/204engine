@@ -35,21 +35,15 @@
           <div class="panel panel-default panelField" ng-repeat="asset in main.assets">
 
             <div class="panel-heading"  role="tab" id="asset_heading_{{ $index }}">
-              <h4 class="panel-title">
-
-                <div class="form-group">
-                  <input type="text" ng-model="asset.name">
-                </div>
-
-                <a class="delete" ng-click="main.deleteAsset($index)"><img src="../images/delete.png" width="50" alt=""/></a>
-                <a data-toggle="collapse" data-parent="#panelGroupLeft" href="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
-                    <img src="../images/down_button.png" width="50" alt=""/>
-                </a>
-              </h4>
+              <div class="form-group">
+                <input type="text" ng-model="asset.name">
+              </div>
+              <a class="delete" ng-click="main.deleteAsset($index)"><img src="../images/delete.png" width="50" alt=""/></a>
+              <a data-toggle="collapse" data-target="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
+                  <img src="../images/down_button.png" width="50" alt=""/>
+              </a>
             </div> <!-- panel-heading -->
-
-            <div class="panel-body panel-collapse collapse" id="asset_body_{{ $index }}" role="tabpanel" aria-labelledby="asset_heading_{{ $index }}">
-
+            <div class="panel-body panel-collapse collapse" id="asset_body_{{ $index }}">
               <p><strong>Type: </strong>{{ asset.type }}</p>
 
               <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
