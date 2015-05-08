@@ -1,245 +1,180 @@
-<!-- <div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
-
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
- -->
-
- <div class="row">
-   <div class="col-lg-2" id="column2">
-     <div class="panel panel-default" id="assetPanel">
-        <div class="panel-heading" id="assetStack">
-          <h1 class="panel-title">Asset Stack</h1>
-        </div> <!-- panel-heading -->
-
-        <!-- List Assets -->
-        <div class="panel-group" id="panelGroupLeft" role="tablist">
-          <div class="panel panel-default panelField" ng-repeat="asset in main.assets">
-
-            <div class="panel-heading"  role="tab" id="asset_heading_{{ $index }}">
-              <div class="form-group">
-                <input type="text" ng-model="asset.name">
-              </div>
-              <a class="delete" ng-click="main.deleteAsset($index)"><img src="../images/delete.png" width="50" alt=""/></a>
-              <a data-toggle="collapse" data-target="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
-                  <img src="../images/down_button.png" width="50" alt=""/>
-              </a>
-            </div> <!-- panel-heading -->
-            <div class="panel-body panel-collapse collapse" id="asset_body_{{ $index }}">
-              <p><strong>Type: </strong>{{ asset.type }}</p>
-
-              <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
-
-              <div class="form-group" ng-if="asset.type === 'rect'">
-                <label>Fill:</label>
-                <input type="text" ng-model="asset.fill">
-              </div>
-
-              <div class="form-group">
-                <input type="text" ng-model="asset.src" ng-if="asset.type === 'image' || asset.type === 'spritesheet' || asset.type === 'audio'">
-              </div>
-
-              <div class="form-group" ng-if="asset.type === 'spritesheet'">
-                <label>Frames</label>
-                <input type="number" ng-model="asset.frames">
-              </div>
-
-              <div class="form-group" ng-if="asset.type === 'audio'">
-                <label>Start</label>
-                <input type="number" ng-model="asset.start">
-              </div>
-
-              <div class="form-group" ng-if="asset.type === 'spritesheet'">
-                <label>Frames Per Second</label>
-                <input type="number" ng-model="asset.framesPerSecond">
-              </div>
-
+<div class="row">
+  <div class="col-lg-2" id="column2">
+    <div class="panel panel-default" id="assetPanel">
+       <div class="panel-heading" id="assetStack">
+         <h1 class="panel-title">Asset Stack</h1>
+       </div> <!-- panel-heading -->
+       <!-- List Assets -->
+       <div class="panel-group" id="panelGroupLeft" role="tablist">
+         <div class="panel panel-default panelField" ng-repeat="asset in main.assets">
+           <div class="panel-heading"  role="tab" id="asset_heading_{{ $index }}">
+             <div class="form-group">
+               <input type="text" ng-model="asset.name">
+             </div>
+             <a class="delete" ng-click="main.deleteAsset($index)"><img src="../images/delete.png" width="50" alt=""/></a>
+             <a data-toggle="collapse" data-target="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
+                 <img src="../images/down_button.png" width="50" alt=""/>
+             </a>
+           </div> <!-- panel-heading -->
+           <div class="panel-body panel-collapse collapse" id="asset_body_{{ $index }}">
+             <p><strong>Type: </strong>{{ asset.type }}</p>
+             <img class="img-preview" ng-src="{{ asset.src }}" ng-if="asset.type === 'image' || asset.type === 'spritesheet'">
+             <div class="form-group" ng-if="asset.type === 'rect'">
+               <label>Fill:</label>
+               <input type="text" ng-model="asset.fill">
+             </div>
+             <div class="form-group">
+               <input type="text" ng-model="asset.src" ng-if="asset.type === 'image' || asset.type === 'spritesheet' || asset.type === 'audio'">
+             </div>
+             <div class="form-group" ng-if="asset.type === 'spritesheet'">
+               <label>Frames</label>
+               <input type="number" ng-model="asset.frames">
+             </div>
+             <div class="form-group" ng-if="asset.type === 'audio'">
+               <label>Start</label>
+               <input type="number" ng-model="asset.start">
+             </div>
+             <div class="form-group" ng-if="asset.type === 'spritesheet'">
+               <label>Frames Per Second</label>
+               <input type="number" ng-model="asset.framesPerSecond">
+             </div>
+             <div class="form-group" ng-if="asset.type !== 'audio'">
+               <label>Scale:</label>
+               <input type="number" ng-model="asset.scale">
+             </div>
               <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Scale:</label>
-                <input type="number" ng-model="asset.scale">
-              </div>
-
-               <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Rotation:</label>
-                <input type="number" ng-model="asset.rotation">
-              </div>
-
-              <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Opacity:</label>
-                <input type="number" ng-model="asset.opacity">
-              </div>
-
-              <div class="form-group" ng-if="asset.type !== 'audio'">
-                  <label>Width:</label>
-                  <input type="number" ng-model="asset.width">
-              </div>
-              <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Height:</label>
-                <input type="number" ng-model="asset.height">
-              </div>
-
-              <div class="form-group" ng-if="asset.type !== 'audio'">
-                  <label>X:</label>
-                  <input type="number" ng-model="asset.x">
-              </div>
-              <div class="form-group" ng-if="asset.type !== 'audio'">
-                <label>Y:</label>
-                <input type="number" ng-model="asset.y">
-              </div>
-
-
-              <div class="panel-group">
-                <div class="panel panel-default" ng-repeat="effect in asset.effects" id="effectHeading">
-
-                  <div class="panel-heading" id="effectHeading">
-                    <h4 class="panel-title">
-                      <p data-toggle="collapse" ng-href="#{{ $parent.$index + '-' + effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
-                    </h4>
-                    <a class="delete" ng-click="main.deleteEffect($parent.$index, $index)">
-                        <img src="../images/delete.png" width="50" alt=""/>
-                    </a>
-                  </div>
-
-                  <div class="panel-body collapse" id="{{ $parent.$index + '-' + effect.type + $index }}">
-
-                    <ul class="list-group" id="listStyle">
-                    <!-- TRANSLATE -->
-                      <li class="list-group-item" ng-if="effect.type == 'translate'">
-                        <label>To:</label>
-                        <div class="input-group">
-                          <span class="input-group-addon" id="basic-addon1">x</span>
-                          <input type="number" ng-model="effect.to.x">
-                          <span class="input-group-addon" id="basic-addon1">y</span>
-                          <input type="number" ng-model="effect.to.y">
-                        </div>
-                      </li>
-
-                      <!-- SCALE -->
-                      <li class="list-group-item" ng-if="effect.type == 'scale'">
-                        <label>To:</label>
-                        <div class="input-group">
-                          <input type="number" ng-model="effect.to.scale">
-                        </div>
-                      </li>
-
-                      <!-- ROTATE -->
-                      <li class="list-group-item" ng-if="effect.type == 'rotate'">
-                        <label>To:</label>
-                        <div class="input-group">
-                          <input type="number" ng-model="effect.to.rotation">
-                        </div>
-                      </li>
-
-                      <!-- FADE -->
-                      <li class="list-group-item" ng-if="effect.type == 'fade'">
-                        <label>To:</label>
-                        <div class="input-group">
-                          <input type="number" ng-model="effect.to.opacity">
-                        </div>
-                      </li>
-
-                      <li class="list-group-item">
-                        <label>Start:</label>
-                        <input type="number" ng-model="effect.startTime">
-                      </li>
-
-                      <li class="list-group-item">
-                        <label>Duration:</label>
-                        <input type="number" ng-model="effect.duration">
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- {{ asset }} -->
-
-
-            </div> <!-- .panel-body -->
-          </div>  <!-- .panel -->
-        </div> <!-- .panel-group -->
-                <!-- <p>{{ effect }}</p> -->
-      </div>
-    </div>
-
-       <textarea>{{ main.assets }}</textarea>
-  </div>
-
-
-   <div class="col-lg-8 panel" id="scene">
-     <enginedir>Your browser doesn't seem to support HTML5</enginedir>
-     <div id="buttonsMain">
-         <a ng-click="main.play()" class="buttonsMain2"><img src="../images/play2.png" width="100" alt=""/></a>
-         <a ng-click="main.stop()" class="buttonsMain2"><img src="../images/stop2.png" width="100" alt=""/></a>
-         <a ng-click="main.save()" class="buttonsMain2"><img src="../images/save2.png" width="100" alt=""/></a>
+               <label>Rotation:</label>
+               <input type="number" ng-model="asset.rotation">
+             </div>
+             <div class="form-group" ng-if="asset.type !== 'audio'">
+               <label>Opacity:</label>
+               <input type="number" ng-model="asset.opacity">
+             </div>
+             <div class="form-group" ng-if="asset.type !== 'audio'">
+                 <label>Width:</label>
+                 <input type="number" ng-model="asset.width">
+             </div>
+             <div class="form-group" ng-if="asset.type !== 'audio'">
+               <label>Height:</label>
+               <input type="number" ng-model="asset.height">
+             </div>
+             <div class="form-group" ng-if="asset.type !== 'audio'">
+                 <label>X:</label>
+                 <input type="number" ng-model="asset.x">
+             </div>
+             <div class="form-group" ng-if="asset.type !== 'audio'">
+               <label>Y:</label>
+               <input type="number" ng-model="asset.y">
+             </div>
+             <div class="panel-group">
+               <div class="panel panel-default" ng-repeat="effect in asset.effects" id="effectHeading">
+                 <div class="panel-heading" id="effectHeading">
+                   <h4 class="panel-title">
+                     <p data-toggle="collapse" ng-href="#{{ $parent.$index + '-' + effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
+                   </h4>
+                   <a class="delete" ng-click="main.deleteEffect($parent.$index, $index)">
+                       <img src="../images/delete.png" width="50" alt=""/>
+                   </a>
+                 </div>
+                 <div class="panel-body collapse" id="{{ $parent.$index + '-' + effect.type + $index }}">
+                   <ul class="list-group" id="listStyle">
+                   <!-- TRANSLATE -->
+                     <li class="list-group-item" ng-if="effect.type == 'translate'">
+                       <label>To:</label>
+                       <div class="input-group">
+                         <span class="input-group-addon" id="basic-addon1">x</span>
+                         <input type="number" ng-model="effect.to.x">
+                         <span class="input-group-addon" id="basic-addon1">y</span>
+                         <input type="number" ng-model="effect.to.y">
+                       </div>
+                     </li>
+                     <!-- SCALE -->
+                     <li class="list-group-item" ng-if="effect.type == 'scale'">
+                       <label>To:</label>
+                       <div class="input-group">
+                         <input type="number" ng-model="effect.to.scale">
+                       </div>
+                     </li>
+                     <!-- ROTATE -->
+                     <li class="list-group-item" ng-if="effect.type == 'rotate'">
+                       <label>To:</label>
+                       <div class="input-group">
+                         <input type="number" ng-model="effect.to.rotation">
+                       </div>
+                     </li>
+                     <!-- FADE -->
+                     <li class="list-group-item" ng-if="effect.type == 'fade'">
+                       <label>To:</label>
+                       <div class="input-group">
+                         <input type="number" ng-model="effect.to.opacity">
+                       </div>
+                     </li>
+                     <li class="list-group-item">
+                       <label>Start:</label>
+                       <input type="number" ng-model="effect.startTime">
+                     </li>
+                     <li class="list-group-item">
+                       <label>Duration:</label>
+                       <input type="number" ng-model="effect.duration">
+                     </li>
+                   </ul>
+                 </div>
+               </div>
+               <!-- {{ asset }} -->
+           </div> <!-- .panel-body -->
+         </div>  <!-- .panel -->
+       </div> <!-- .panel-group -->
+               <!-- <p>{{ effect }}</p> -->
      </div>
    </div>
-
-
-
-
-   <div class="col-lg-2 panel panel-fx" id="column3">
-
-     <div class="panel panel-default" id="rightPanel">
-        <div class="panel-heading" id="add">
-          <h1 class="panel-title">Add</h1>
-        </div> <!-- panel-heading -->
-
-        <div class="panel-group" id="panelGroupLeft">
-          <div class="panel panel-default panelField">
-
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                Add a new asset
-              </h4>
-            </div> <!-- panel-heading -->
-
-            <div class="panel-body">
-              <div class="form-group">
-
-                <label>Add asset</label>
-                <select ng-options="key for (key, value) in main.templates" ng-model="main.assetSelected">{{ key }}</select>
-                <a class="btn btn-default" ng-click="main.addAsset()">Add Asset</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel panel-default panelField">
-
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                Add a new effect
-              </h4>
-            </div> <!-- panel-heading -->
-
-            <div class="panel-body">
-              <div class="form-group">
-                <label>Asset to affect</label>
-                 <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.fxIndex"></select>
-                </div>
-                <div class="form-group">
-                  <label>Effect to apply</label>
-                  <select ng-options="key for (key, value) in main.fxTemplates" ng-model="main.fxSelected"></select>
-                </div>
-                <a class="btn btn-default" ng-click="main.addEffect(main.fxIndex, main.fxSelected)">Add Effect</a>
-            </div>
-          </div>
-        </div>
-   </div>
+      <textarea>{{ main.assets }}</textarea>
  </div>
+  <div class="col-lg-8 panel" id="scene">
+    <enginedir>Your browser doesn't seem to support HTML5</enginedir>
+    <div id="buttonsMain">
+        <a ng-click="main.play()" class="buttonsMain2"><img src="../images/play2.png" width="100" alt=""/></a>
+        <a ng-click="main.stop()" class="buttonsMain2"><img src="../images/stop2.png" width="100" alt=""/></a>
+        <a ng-click="main.save()" class="buttonsMain2"><img src="../images/save2.png" width="100" alt=""/></a>
+    </div>
+  </div>
+  <div class="col-lg-2 panel panel-fx" id="column3">
+    <div class="panel panel-default" id="rightPanel">
+       <div class="panel-heading" id="add">
+         <h1 class="panel-title">Add</h1>
+       </div> <!-- panel-heading -->
+       <div class="panel-group" id="panelGroupLeft">
+         <div class="panel panel-default panelField">
+           <div class="panel-heading">
+             <h4 class="panel-title">
+               Add a new asset
+             </h4>
+           </div> <!-- panel-heading -->
+           <div class="panel-body">
+             <div class="form-group">
+               <label>Add asset</label>
+               <select ng-options="key for (key, value) in main.templates" ng-model="main.assetSelected">{{ key }}</select>
+               <a class="btn btn-default" ng-click="main.addAsset()">Add Asset</a>
+             </div>
+           </div>
+         </div>
+         <div class="panel panel-default panelField">
+           <div class="panel-heading">
+             <h4 class="panel-title">
+               Add a new effect
+             </h4>
+           </div> <!-- panel-heading -->
+           <div class="panel-body">
+             <div class="form-group">
+               <label>Asset to affect</label>
+                <select ng-options="index as asset.name for (index, asset) in main.assets" ng-model="main.fxIndex"></select>
+               </div>
+               <div class="form-group">
+                 <label>Effect to apply</label>
+                 <select ng-options="key for (key, value) in main.fxTemplates" ng-model="main.fxSelected"></select>
+               </div>
+               <a class="btn btn-default" ng-click="main.addEffect(main.fxIndex, main.fxSelected)">Add Effect</a>
+           </div>
+         </div>
+       </div>
+  </div>
+</div>
