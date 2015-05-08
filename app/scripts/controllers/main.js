@@ -156,7 +156,7 @@ angular.module('animationEngineApp')
             duration: null,
         },
         fade: {
-            type: 'opacity',
+            type: 'fade',
             from:{
                 opacity: null
             },
@@ -218,7 +218,7 @@ angular.module('animationEngineApp')
 {
     type: move,
     parameters: {
-        
+
     }
 }
 */
