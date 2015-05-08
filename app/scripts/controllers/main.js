@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('animationEngineApp')
-  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', function (assetsSvc, canvasSvc) {
+  .controller('MainCtrl', ['assetsSvc', 'canvasSvc', '$http', function (assetsSvc, canvasSvc, $http) {
 
     var self = this;
     // var c = {
@@ -21,6 +21,20 @@ angular.module('animationEngineApp')
 
     self.stop = function () {
         canvasSvc.stop();
+    };
+
+    self.export = function () {
+        var data = JSON.stringify(assetsSvc.assets);
+        console.log('sending:', data);
+        $http.post('/export', {data: data})
+            .success(function (data, status, headers, config) {
+                console.log('got this data:', typeof data);
+                var blob = new Blob([data], { type: 'text/plain;charset=utf-8'});
+                saveAs(blob, 'embed.html');
+            })
+            .error(function (data, status, headers, config) {
+                console.error(status);
+            });
     };
 
     if (localStorage.getItem('assets')) {
