@@ -16,6 +16,9 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
 
   var frameRequestId;
 
+  canvas = document.getElementById('canvas');
+  context = canvas.getContext('2d');
+
   self.stop = function () {
     cancelAnimationFrame(frameRequestId);
     frameRequestId = null;
@@ -35,11 +38,13 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
     assets = angular.copy(assetsSvc.assets);
     // console.log('assets', assets);
 
-    canvas = document.getElementById('canvas');
-    context = canvas.getContext('2d');
+
+    console.log(context);
 
     width = width;
     height = height;
+
+    console.log("width: " + width + " height: " + height);
     // preload images
     assets.forEach(function (asset) {
       if (asset.type === 'image' || asset.type === 'spritesheet') {
@@ -54,6 +59,10 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         // asset.audio.load();
       }
     });
+
+    context.fillStyle = "#FFF";
+    context.fill();
+    context.clearRect(0, 0, width, height);
 
     frameRequestId = requestAnimationFrame(self.drawFrame);
   };
@@ -76,6 +85,9 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       // calculate time elapsed
       var timeElapsed = timestamp - time.startTime;
 
+      // clear canvas
+      context.clearRect(0, 0, width, height);
+
       // UPDATE
       // console.log("current assets passed :", assets);
       assets.forEach(function (asset) {
@@ -91,9 +103,6 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
       });
 
       // DRAW
-      // clear canvas
-      context.clearRect(0, 0, width, height);
-
       assets.forEach(function (asset) {
         // calculate scaled width and height of asset as we need to know for rotation
         var scaledWidth = asset.width * (asset.scale / 100);
@@ -103,7 +112,7 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         // the alternative is to untranslate & unrotate after drawing
         context.save();
 
-        if (asset.opacity !== 0){
+        if (asset.opacity !== null){
           context.globalAlpha = asset.opacity;
         }
 
@@ -125,11 +134,13 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
 
         switch (asset.type) {
           case 'rect':
-            context.rect(asset.x, asset.y, scaledWidth, scaledHeight);
-            context.fillStyle=asset.fill;
+            console.log(asset.x);
+            context.fillStyle = asset.fill;
             context.fill();
+            context.rect(asset.x, asset.y, scaledWidth, scaledHeight);
             break;
           case 'image':
+
             context.drawImage(images[asset.name], asset.x, asset.y, scaledWidth, scaledHeight);
             break;
 

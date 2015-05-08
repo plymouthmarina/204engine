@@ -16,7 +16,7 @@ angular.module('animationEngineApp')
     self.assetSelected = null;
 
     self.play = function () {
-        canvasSvc.init(1000, 1000);
+        canvasSvc.init(1280, 720);
     };
 
     self.stop = function () {

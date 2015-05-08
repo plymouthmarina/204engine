@@ -10,7 +10,6 @@ app.use(express.static('app'));
 
 app.get('/export', function (req, res) {
   // concat all files together needed for embedding
-  
 });
 
 app.get('*', function (req, res) {
