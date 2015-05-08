@@ -135,12 +135,14 @@ engine.service('canvasSvc', ['assetsSvc', 'fx', 'time', function (assetsSvc, fx,
         switch (asset.type) {
           case 'rect':
             console.log(asset.x);
+            context.beginPath();
             context.fillStyle = asset.fill;
-            context.fill();
             context.rect(asset.x, asset.y, scaledWidth, scaledHeight);
+            context.fill();
+            context.closePath();
             break;
-          case 'image':
 
+          case 'image':
             context.drawImage(images[asset.name], asset.x, asset.y, scaledWidth, scaledHeight);
             break;
 
