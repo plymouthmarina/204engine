@@ -7,14 +7,12 @@
        <!-- List Assets -->
        <div class="panel-group" id="panelGroupLeft" role="tablist">
          <div class="panel panel-default panelField" ng-repeat="asset in main.assets">
-           <div class="panel-heading"  role="tab" id="asset_heading_{{ $index }}">
+           <div class="panel-heading"  role="tab" id="asset_heading_{{ $index }}" data-parent="#panelGroupLeft" data-toggle="collapse" data-target="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
              <div class="form-group">
                <input type="text" ng-model="asset.name">
              </div>
              <a class="delete" ng-click="main.deleteAsset($index)"><img src="../images/delete.png" width="50" alt=""/></a>
-             <a data-toggle="collapse" data-target="#asset_body_{{ $index }}" aria-expanded="false" aria-controls="asset_body_{{ $index }}">
-                 <img src="../images/down_button.png" width="50" alt=""/>
-             </a>
+             <img src="../images/down_button.png" width="50" alt=""/>
            </div> <!-- panel-heading -->
            <div class="panel-body panel-collapse collapse" id="asset_body_{{ $index }}">
              <p><strong>Type: </strong>{{ asset.type }}</p>
@@ -68,7 +66,7 @@
              </div>
              <div class="panel-group">
                <div class="panel panel-default" ng-repeat="effect in asset.effects" id="effectHeading">
-                 <div class="panel-heading" id="effectHeading">
+                 <div class="panel-heading" id="effectHeading" data-toggle="collapse" ng-href="#{{ $parent.$index + '-' + effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">
                    <h4 class="panel-title">
                      <p data-toggle="collapse" ng-href="#{{ $parent.$index + '-' + effect.type + $index }}" aria-expanded="false" aria-controls="{{ effect.type + $index }}">{{ effect.type }}</p>
                    </h4>

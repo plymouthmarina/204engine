@@ -67,18 +67,8 @@ app.post('/export', function (req, res) {
 
       console.log(html);
       res.send(html);
-      // fs.writeFile('embed.html', html, function (err) {
-      //   if (err) throw err;
-      //   console.log('file is written');
-      //   res.download(__dirname + '/embed.html', 'embed.html', function (err) {
-      //     if (err) throw err;
-      //   });
-      // });
-    });
-
-
-  // concat all files together needed for embedding
-  // res.end();
+    }
+  );
 });
 
 app.get('*', function (req, res) {
