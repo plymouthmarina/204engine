@@ -84,6 +84,8 @@
                        <div class="input-group">
                          <span class="input-group-addon" id="basic-addon1">x</span>
                          <input type="number" ng-model="effect.to.x">
+                       </div>
+                       <div class="input-group">
                          <span class="input-group-addon" id="basic-addon1">y</span>
                          <input type="number" ng-model="effect.to.y">
                        </div>
@@ -132,9 +134,10 @@
   <div class="col-lg-8 panel" id="scene">
     <enginedir>Your browser doesn't seem to support HTML5</enginedir>
     <div id="buttonsMain">
-        <a ng-click="main.play()" class="buttonsMain2"><img src="../images/play2.png" width="100" alt=""/></a>
-        <a ng-click="main.stop()" class="buttonsMain2"><img src="../images/stop2.png" width="100" alt=""/></a>
-        <a ng-click="main.save()" class="buttonsMain2"><img src="../images/save2.png" width="100" alt=""/></a>
+      <a ng-click="main.play()" class="buttonsMain2"><img src="../images/play2.png" width="100" alt=""/></a>
+      <a ng-click="main.stop()" class="buttonsMain2"><img src="../images/stop2.png" width="100" alt=""/></a>
+      <a ng-click="main.save()" class="buttonsMain2"><img src="../images/save2.png" width="100" alt=""/></a>
+      <a ng-click="main.export()" class="button">Export</a>
     </div>
   </div>
   <div class="col-lg-2 panel panel-fx" id="column3">
